@@ -14,6 +14,9 @@ class DetailViewController: UIViewController {
 	
 	var detailItem: Entry?
 	var checkList: [CheckListItem] = []
+	var reminderDate: String?
+	var reminderNote: String?
+	var formatter = DateFormatter()
 	
 	// MARK: IBOutlets
 	
@@ -22,11 +25,16 @@ class DetailViewController: UIViewController {
 	@IBOutlet weak var contentTextView: UITextView!
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var listItemTextField: UITextField!
+	@IBOutlet weak var reminderButton: UIButton!
 	
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
+		NotificationCenter.default.addObserver(self, selector: #selector(reminderAdded), name: NSNotification.Name(rawValue: "reminderAdded"), object: nil)
+
+		formatter.dateFormat = "MM-dd-yyyy"
+		
 		contentTextView.delegate = self
 		titleTextField.delegate = self
 		listItemTextField.delegate = self
@@ -47,27 +55,27 @@ class DetailViewController: UIViewController {
 			dateTextField.text = detail.date
 			contentTextView.text = detail.content
 			
+			if let reminder = detail.reminder {
+				reminderButton.setTitle("   Reminder Set   ", for: .normal)
+				reminderDate = reminder.date
+				reminderNote = reminder.note
+			}
+			
 			guard let savedList = detail.list, let listItems = savedList.items else { return }
-			print(listItems)
 			checkList = listItems
 			tableView.reloadData()
 		} else {
 			dateTextField.text = setDate()
 		}
 	}
-
-	/*var detailItem: Entry? {
-		didSet {
-		    // Update the view.
-		    configureView()
-		}
-	}*/
 	
 	// MARK: Custom functions
 	
+	@objc func reminderAdded() {
+		reminderButton.setTitle("   Reminder Set   ", for: .normal)
+	}
+	
 	func setDate() -> String {
-		let formatter = DateFormatter()
-		formatter.dateFormat = "MM-dd-yyyy"
 		let currentDate = Date()
 		let dateString = formatter.string(from: currentDate)
 		return dateString
@@ -80,21 +88,44 @@ class DetailViewController: UIViewController {
 		entry.lastEdited = dateTextField.text
 	}
 	
+	func getDate(from stringDate: String) -> Date? {
+		guard let createdDate = formatter.date(from: stringDate) else {
+			print("date conversion failed")
+			return nil
+		}
+		return createdDate
+	}
+	
 	func save() {
 		var managedContext = CoreDataManager.shared.managedObjectContext
-		for item in checkList {
-			print(item.isComplete)
-		}
 		
 		guard let currentEntry = detailItem else {
 			// if there is no current entry being edited, add a new one
 			let newEntry = Entry(context: managedContext)
 			
-			var list: List?
-			list = List(context: managedContext)
-			list?.items = checkList
+			if checkList.count != 0 {
+				var list: List?
+				list = List(context: managedContext)
+				list?.items = checkList
+				
+				newEntry.list = list
+			}
 			
-			newEntry.list = list
+			if let date = reminderDate, let note = reminderNote {
+				var reminder: Reminder?
+				reminder = Reminder(context: managedContext)
+				reminder?.date = date
+				reminder?.note = note
+				reminder?.id = Date()
+				
+				newEntry.reminder = reminder
+				
+				// add notification
+				if let reminder = reminder {
+					NotificationManager.addTimeBasedNotification(for: reminder)
+				}
+			}
+			
 			getEntryData(entry: newEntry)
 		
 			do {
@@ -110,10 +141,26 @@ class DetailViewController: UIViewController {
 		}
 		
 		// otherwise resave current entry that is being edited, overwrite existing list
-		var list: List?
-		list = List(context: managedContext)
-		list?.items = checkList
-		currentEntry.list = list
+		if checkList.count != 0 {
+			var list: List?
+			list = List(context: managedContext)
+			list?.items = checkList
+			currentEntry.list = list
+		}
+		
+		if let date = reminderDate, let note = reminderNote {
+			var reminder: Reminder?
+			reminder = Reminder(context: managedContext)
+			reminder?.date = date
+			reminder?.note = note
+			reminder?.id = Date()
+			currentEntry.reminder = reminder
+			
+			// add notification
+			if let reminder = reminder {
+				NotificationManager.addTimeBasedNotification(for: reminder)
+			}
+		}
 	
 		currentEntry.title = titleTextField.text
 		currentEntry.lastEdited = setDate()
@@ -128,8 +175,24 @@ class DetailViewController: UIViewController {
 			showAlert(title: "Save failed", message: "Notice: Data has not successfully been saved.")
 		}
 	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "addReminder" && detailItem?.reminder != nil {
+			let destinationViewController = segue.destination as! AddReminderViewController
+			destinationViewController.note = reminderNote
+			
+			if let remind = reminderDate, let date = getDate(from: remind) {
+				destinationViewController.date = date
+			}
+		}
+	}
 
 	// MARK: IBActions
+	
+	@IBAction func addReminderTapped(_ sender: UIButton) {
+		performSegue(withIdentifier: "addReminder", sender: Any?.self)
+	}
+	
 	
 	@IBAction func addListItemPressed(_ sender: UIButton) {
 		guard let text = listItemTextField.text else { return }
@@ -149,6 +212,9 @@ class DetailViewController: UIViewController {
 			return
 		}
 		save()
+	}
+	
+	@IBAction func unwindFromReminder(segue: UIStoryboardSegue) {
 	}
 	
 }

@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2D0C7D5322BEBB1700B4830A /* EntryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0C7D5222BEBB1700B4830A /* EntryListTableViewCell.swift */; };
+		2D0C7D5522BEC75500B4830A /* AddReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0C7D5422BEC75500B4830A /* AddReminderViewController.swift */; };
 		2D87E23122BBFB8400A9266D /* CheckListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D87E23022BBFB8400A9266D /* CheckListItem.swift */; };
 		2D87E23522BC001300A9266D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D87E23422BC001300A9266D /* Extensions.swift */; };
 		2D87E23722BC247D00A9266D /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D87E23622BC247D00A9266D /* CoreDataManager.swift */; };
 		2D87E23922BC24DF00A9266D /* EntryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D87E23822BC24DF00A9266D /* EntryManager.swift */; };
 		2D95C84F22BD5689004441C3 /* CheckListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D95C84E22BD5689004441C3 /* CheckListTableViewCell.swift */; };
+		2D98D00522C1489C00777FB9 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D98D00422C1489C00777FB9 /* NotificationManager.swift */; };
 		2DA38ACB22BEA5CA00FE6393 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38ACA22BEA5CA00FE6393 /* Protocol.swift */; };
 		2DC47C3322BAE45800315A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC47C3222BAE45800315A1F /* AppDelegate.swift */; };
 		2DC47C3522BAE45800315A1F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC47C3422BAE45800315A1F /* MasterViewController.swift */; };
@@ -36,11 +38,14 @@
 
 /* Begin PBXFileReference section */
 		2D0C7D5222BEBB1700B4830A /* EntryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryListTableViewCell.swift; sourceTree = "<group>"; };
+		2D0C7D5422BEC75500B4830A /* AddReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderViewController.swift; sourceTree = "<group>"; };
 		2D87E23022BBFB8400A9266D /* CheckListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListItem.swift; sourceTree = "<group>"; };
 		2D87E23422BC001300A9266D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2D87E23622BC247D00A9266D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		2D87E23822BC24DF00A9266D /* EntryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryManager.swift; sourceTree = "<group>"; };
 		2D95C84E22BD5689004441C3 /* CheckListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListTableViewCell.swift; sourceTree = "<group>"; };
+		2D98D00422C1489C00777FB9 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		2D98D00622C165C500777FB9 /* Space Log.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Space Log.entitlements"; sourceTree = "<group>"; };
 		2DA38ACA22BEA5CA00FE6393 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		2DC47C2F22BAE45800315A1F /* Space Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Space Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DC47C3222BAE45800315A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +85,7 @@
 				2D87E23022BBFB8400A9266D /* CheckListItem.swift */,
 				2D87E23622BC247D00A9266D /* CoreDataManager.swift */,
 				2D87E23822BC24DF00A9266D /* EntryManager.swift */,
+				2D98D00422C1489C00777FB9 /* NotificationManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -91,6 +97,7 @@
 				2D0C7D5222BEBB1700B4830A /* EntryListTableViewCell.swift */,
 				2DC47C3622BAE45800315A1F /* DetailViewController.swift */,
 				2D95C84E22BD5689004441C3 /* CheckListTableViewCell.swift */,
+				2D0C7D5422BEC75500B4830A /* AddReminderViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -116,6 +123,7 @@
 		2DC47C3122BAE45800315A1F /* Space Log */ = {
 			isa = PBXGroup;
 			children = (
+				2D98D00622C165C500777FB9 /* Space Log.entitlements */,
 				2DC47C3222BAE45800315A1F /* AppDelegate.swift */,
 				2D87E23222BBFEDC00A9266D /* Models */,
 				2D87E23322BBFEF100A9266D /* Views */,
@@ -189,6 +197,11 @@
 				TargetAttributes = {
 					2DC47C2E22BAE45800315A1F = {
 						CreatedOnToolsVersion = 10.2.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2DC47C4422BAE45A00315A1F = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -244,7 +257,9 @@
 				2D0C7D5322BEBB1700B4830A /* EntryListTableViewCell.swift in Sources */,
 				2D87E23522BC001300A9266D /* Extensions.swift in Sources */,
 				2D87E23922BC24DF00A9266D /* EntryManager.swift in Sources */,
+				2D0C7D5522BEC75500B4830A /* AddReminderViewController.swift in Sources */,
 				2D95C84F22BD5689004441C3 /* CheckListTableViewCell.swift in Sources */,
+				2D98D00522C1489C00777FB9 /* NotificationManager.swift in Sources */,
 				2DC47C3722BAE45800315A1F /* DetailViewController.swift in Sources */,
 				2DC47C3522BAE45800315A1F /* MasterViewController.swift in Sources */,
 				2D87E23122BBFB8400A9266D /* CheckListItem.swift in Sources */,
@@ -412,6 +427,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Space Log/Space Log.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A8R365GJ52;
 				INFOPLIST_FILE = "Space Log/Info.plist";
@@ -430,6 +446,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Space Log/Space Log.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A8R365GJ52;
 				INFOPLIST_FILE = "Space Log/Info.plist";

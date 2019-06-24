@@ -60,6 +60,9 @@
                                                 <state key="normal" title="   Add Reminder   ">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="addReminderTapped:" destination="JEX-9P-axG" eventType="touchUpInside" id="gLW-WC-lqJ"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -174,13 +177,89 @@
                         <outlet property="contentTextView" destination="att-qD-vbj" id="bGz-G3-7ZL"/>
                         <outlet property="dateTextField" destination="Xwm-v8-ZpD" id="2VZ-eg-uF6"/>
                         <outlet property="listItemTextField" destination="fe7-a0-Kjf" id="EW5-WZ-az6"/>
+                        <outlet property="reminderButton" destination="4ov-fR-llh" id="0Nf-Z8-p0b"/>
                         <outlet property="tableView" destination="4G9-FI-xCc" id="upt-jI-H2V"/>
                         <outlet property="titleTextField" destination="5xe-S3-ncf" id="Vji-gq-uFS"/>
+                        <segue destination="evR-rO-c8f" kind="presentation" identifier="addReminder" id="cUQ-nf-2qh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="708.69565217391312" y="128.57142857142856"/>
+        </scene>
+        <!--Add Reminder View Controller-->
+        <scene sceneID="1Pk-7d-4A1">
+            <objects>
+                <viewController id="evR-rO-c8f" customClass="AddReminderViewController" customModule="Space_Log" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zBe-Al-TmN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="QEt-Bs-nyj">
+                                <rect key="frame" x="0.0" y="151" width="414" height="216"/>
+                                <color key="backgroundColor" red="0.36078431372549019" green="0.41176470588235292" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <date key="date" timeIntervalSinceReferenceDate="582927639.01627302">
+                                    <!--2019-06-22 20:20:39 +0000-->
+                                </date>
+                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJL-8Y-3LP">
+                                <rect key="frame" x="183" y="752" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="evR-rO-c8f" eventType="touchUpInside" id="fje-CC-T9T"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter reminder text" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gwl-f5-woN">
+                                <rect key="frame" x="30" y="417" width="354" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please select a time and date, and text to display for your reminder" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5Z-VH-J6P">
+                                <rect key="frame" x="30" y="78" width="354" height="43"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <color key="textColor" red="0.35923349910000002" green="0.4104729191" blue="0.54070312499999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bzv-65-sg6">
+                                <rect key="frame" x="167.5" y="537" width="79" height="30"/>
+                                <color key="backgroundColor" red="0.35923349910000002" green="0.4104729191" blue="0.54070312499999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="   Confirm   ">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="confirmButtonPressed:" destination="evR-rO-c8f" eventType="touchUpInside" id="2SA-f3-jDg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1147345801" green="0.096736518349999995" blue="0.17039062499999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="e5Z-VH-J6P" secondAttribute="trailing" constant="30" id="2Xu-DV-WXg"/>
+                            <constraint firstItem="e5Z-VH-J6P" firstAttribute="leading" secondItem="UKm-go-OE1" secondAttribute="leading" constant="30" id="GGG-Qd-FEH"/>
+                            <constraint firstItem="QEt-Bs-nyj" firstAttribute="top" secondItem="e5Z-VH-J6P" secondAttribute="bottom" constant="30" id="GV5-RQ-Gxo"/>
+                            <constraint firstItem="UKm-go-OE1" firstAttribute="trailing" secondItem="Gwl-f5-woN" secondAttribute="trailing" constant="30" id="IPr-tm-HA1"/>
+                            <constraint firstItem="FJL-8Y-3LP" firstAttribute="centerX" secondItem="zBe-Al-TmN" secondAttribute="centerX" id="Q37-6U-k5F"/>
+                            <constraint firstItem="Gwl-f5-woN" firstAttribute="top" secondItem="QEt-Bs-nyj" secondAttribute="bottom" constant="50" id="UC8-dg-1uW"/>
+                            <constraint firstItem="QEt-Bs-nyj" firstAttribute="trailing" secondItem="UKm-go-OE1" secondAttribute="trailing" id="dDZ-bW-hIP"/>
+                            <constraint firstItem="bzv-65-sg6" firstAttribute="centerX" secondItem="zBe-Al-TmN" secondAttribute="centerX" id="dI4-jY-8mK"/>
+                            <constraint firstItem="Gwl-f5-woN" firstAttribute="leading" secondItem="UKm-go-OE1" secondAttribute="leading" constant="30" id="f7H-Gf-3ua"/>
+                            <constraint firstItem="e5Z-VH-J6P" firstAttribute="top" secondItem="UKm-go-OE1" secondAttribute="top" constant="34" id="fvU-jS-QXM"/>
+                            <constraint firstItem="UKm-go-OE1" firstAttribute="bottom" secondItem="FJL-8Y-3LP" secondAttribute="bottom" constant="80" id="nrM-WJ-Rgr"/>
+                            <constraint firstItem="QEt-Bs-nyj" firstAttribute="leading" secondItem="UKm-go-OE1" secondAttribute="leading" id="vy8-ez-ohq"/>
+                            <constraint firstItem="bzv-65-sg6" firstAttribute="top" secondItem="Gwl-f5-woN" secondAttribute="bottom" constant="90" id="wto-or-X8B"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="UKm-go-OE1"/>
+                    </view>
+                    <connections>
+                        <outlet property="datePicker" destination="QEt-Bs-nyj" id="fDV-0E-eIU"/>
+                        <outlet property="noteTextField" destination="Gwl-f5-woN" id="LZV-Ow-6YA"/>
+                        <segue destination="aM8-Is-cGC" kind="unwind" identifier="unwind" unwindAction="unwindFromReminderWithSegue:" id="HTy-Kl-tjL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ust-NV-GQu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aM8-Is-cGC" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1480" y="129"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
@@ -278,16 +357,16 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dVA-oV-w7K">
-                                                    <rect key="frame" x="252.5" y="0.0" width="121.5" height="18"/>
+                                                    <rect key="frame" x="270.5" y="0.0" width="103.5" height="18"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Edited" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="81X-2e-O7M">
-                                                            <rect key="frame" x="0.0" y="0.0" width="79" height="18"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Edit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="81X-2e-O7M">
+                                                            <rect key="frame" x="0.0" y="0.0" width="61" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                             <color key="textColor" red="0.35923349910000002" green="0.4104729191" blue="0.54070312499999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAI-FE-E1q">
-                                                            <rect key="frame" x="89" y="0.0" width="32.5" height="18"/>
+                                                            <rect key="frame" x="71" y="0.0" width="32.5" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
