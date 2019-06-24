@@ -21,11 +21,13 @@ class DetailViewController: UIViewController {
 	// MARK: IBOutlets
 	
 	@IBOutlet weak var titleTextField: UITextField!
-	@IBOutlet weak var dateTextField: UILabel!
+	@IBOutlet weak var dateLabel: UILabel!
+	@IBOutlet weak var editLabel: UILabel!
 	@IBOutlet weak var contentTextView: UITextView!
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var listItemTextField: UITextField!
 	@IBOutlet weak var reminderButton: UIButton!
+	@IBOutlet weak var reminderText: UILabel!
 	
 
 	override func viewDidLoad() {
@@ -52,27 +54,35 @@ class DetailViewController: UIViewController {
 		
 		if let detail = detailItem {
 			titleTextField.text = detail.title
-			dateTextField.text = detail.date
+			dateLabel.text = detail.date
 			contentTextView.text = detail.content
 			
 			if let reminder = detail.reminder {
-				reminderButton.setTitle("   Reminder Set   ", for: .normal)
+				reminderButton.setTitle("   Edit?   ", for: .normal)
 				reminderDate = reminder.date
 				reminderNote = reminder.note
+				
+				if let date = reminderDate {
+					var labeltext = date.dropLast(11)
+					reminderText.text = "Reminder on \(labeltext)"
+				}
 			}
 			
 			guard let savedList = detail.list, let listItems = savedList.items else { return }
 			checkList = listItems
 			tableView.reloadData()
 		} else {
-			dateTextField.text = setDate()
+			dateLabel.text = setDate()
 		}
 	}
 	
 	// MARK: Custom functions
 	
 	@objc func reminderAdded() {
-		reminderButton.setTitle("   Reminder Set   ", for: .normal)
+		reminderButton.setTitle("   Edit?   ", for: .normal)
+		if let date = reminderDate {
+			reminderText.text = "Reminder on \(date)"
+		}
 	}
 	
 	func setDate() -> String {
@@ -83,9 +93,9 @@ class DetailViewController: UIViewController {
 	
 	func getEntryData(entry: Entry) {
 		entry.title = titleTextField.text
-		entry.date = dateTextField.text
+		entry.date = dateLabel.text
 		entry.content = contentTextView.text
-		entry.lastEdited = dateTextField.text
+		entry.lastEdited = dateLabel.text
 	}
 	
 	func getDate(from stringDate: String) -> Date? {
@@ -153,7 +163,6 @@ class DetailViewController: UIViewController {
 			reminder = Reminder(context: managedContext)
 			reminder?.date = date
 			reminder?.note = note
-			reminder?.id = Date()
 			currentEntry.reminder = reminder
 			
 			// add notification
@@ -196,6 +205,9 @@ class DetailViewController: UIViewController {
 	
 	@IBAction func addListItemPressed(_ sender: UIButton) {
 		guard let text = listItemTextField.text else { return }
+		if text == "Enter title . . ." || text == "" {
+			return
+		}
 		let newItem = CheckListItem(item: text, isComplete: false)
 		checkList.append(newItem)
 		listItemTextField.text = ""
