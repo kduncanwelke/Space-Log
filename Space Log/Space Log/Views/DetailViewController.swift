@@ -33,8 +33,6 @@ class DetailViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
-		NotificationCenter.default.addObserver(self, selector: #selector(reminderAdded), name: NSNotification.Name(rawValue: "reminderAdded"), object: nil)
-
 		formatter.dateFormat = "MM-dd-yyyy"
 		
 		contentTextView.delegate = self
@@ -57,14 +55,19 @@ class DetailViewController: UIViewController {
 			dateLabel.text = detail.date
 			contentTextView.text = detail.content
 			
+			if detail.lastEdited == nil {
+				editLabel.text = "N/A"
+			} else {
+				editLabel.text = detail.lastEdited
+			}
+			
 			if let reminder = detail.reminder {
 				reminderButton.setTitle("   Edit?   ", for: .normal)
 				reminderDate = reminder.date
 				reminderNote = reminder.note
 				
-				if let date = reminderDate {
-					var labeltext = date.dropLast(11)
-					reminderText.text = "Reminder on \(labeltext)"
+				if let date = reminder.date {
+					reminderText.text = "Reminder on \(date)"
 				}
 			}
 			
@@ -73,13 +76,15 @@ class DetailViewController: UIViewController {
 			tableView.reloadData()
 		} else {
 			dateLabel.text = setDate()
+			editLabel.text = "N/A"
 		}
 	}
 	
 	// MARK: Custom functions
 	
-	@objc func reminderAdded() {
+	func reminderAdded() {
 		reminderButton.setTitle("   Edit?   ", for: .normal)
+	
 		if let date = reminderDate {
 			reminderText.text = "Reminder on \(date)"
 		}
@@ -159,15 +164,25 @@ class DetailViewController: UIViewController {
 		}
 		
 		if let date = reminderDate, let note = reminderNote {
-			var reminder: Reminder?
-			reminder = Reminder(context: managedContext)
-			reminder?.date = date
-			reminder?.note = note
-			currentEntry.reminder = reminder
-			
-			// add notification
-			if let reminder = reminder {
-				NotificationManager.addTimeBasedNotification(for: reminder)
+			if let currentReminder = currentEntry.reminder {
+				currentReminder.date = date
+				currentReminder.note = note
+				currentEntry.reminder = currentReminder
+				
+				// add notification
+				NotificationManager.addTimeBasedNotification(for: currentReminder)
+			} else {
+				var reminder: Reminder?
+				reminder = Reminder(context: managedContext)
+				reminder?.date = date
+				reminder?.note = note
+				reminder?.id = Date()
+				currentEntry.reminder = reminder
+				
+				// add notification
+				if let reminder = reminder {
+					NotificationManager.addTimeBasedNotification(for: reminder)
+				}
 			}
 		}
 	
@@ -189,10 +204,7 @@ class DetailViewController: UIViewController {
 		if segue.identifier == "addReminder" && detailItem?.reminder != nil {
 			let destinationViewController = segue.destination as! AddReminderViewController
 			destinationViewController.note = reminderNote
-			
-			if let remind = reminderDate, let date = getDate(from: remind) {
-				destinationViewController.date = date
-			}
+			destinationViewController.stringDate = reminderDate
 		}
 	}
 
@@ -227,8 +239,13 @@ class DetailViewController: UIViewController {
 	}
 	
 	@IBAction func unwindFromReminder(segue: UIStoryboardSegue) {
+		if segue.identifier == "unwind" {
+			let sourceViewController = segue.source as! AddReminderViewController
+			reminderDate = sourceViewController.stringDate
+			reminderNote = sourceViewController.noteTextField.text
+			reminderAdded()
+		}
 	}
-	
 }
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource, CellCheckDelegate {

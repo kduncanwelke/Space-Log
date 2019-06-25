@@ -99,7 +99,14 @@ class MasterViewController: UITableViewController {
 		cell.cellTitle.text = object.title
 		cell.cellContent.text = object.content
 		cell.createdDate.text = object.date
-		cell.editedDate.text = object.lastEdited
+		
+		cell.editedDate.text = {
+			if object.lastEdited != nil {
+				return object.lastEdited
+			} else {
+				return "N/A"
+			}
+		}()
 		
 		if object.list != nil {
 			cell.hasList.text = "Yes"

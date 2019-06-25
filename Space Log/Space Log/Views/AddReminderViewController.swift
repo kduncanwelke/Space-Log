@@ -17,6 +17,7 @@ class AddReminderViewController: UIViewController {
 	
 	// MARK: Variables
 	
+	var formatter = DateFormatter()
 	var stringDate: String?
 	var note: String?
 	var date: Date?
@@ -25,10 +26,14 @@ class AddReminderViewController: UIViewController {
         super.viewDidLoad()
 
 		datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
+	
+		formatter.dateFormat = "yyyy-MM-dd 'at' hh:mm a"
 		
         // Do any additional setup after loading the view.
-		if let setDate = date {
-			datePicker.date = setDate
+		if let string = stringDate {
+			if let dateToDisplay = getDate(from: string) {
+				datePicker.date = dateToDisplay
+			}
 			noteTextField.text = note
 		}
 		
@@ -40,9 +45,15 @@ class AddReminderViewController: UIViewController {
 	
 	// MARK: Custom functions
 	
+	func getDate(from stringDate: String) -> Date? {
+		guard let createdDate = formatter.date(from: stringDate) else {
+			print("date conversion failed")
+			return nil
+		}
+		return createdDate
+	}
+	
 	func setDate(date: Date) -> String {
-		let formatter = DateFormatter()
-		formatter.dateFormat = "yyyy-MM-dd 'at' hh:mm a"
 		let dateString = formatter.string(from: date)
 		return dateString
 	}
@@ -61,15 +72,13 @@ class AddReminderViewController: UIViewController {
     }
     */
 	
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+	/*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "unwind" {
 			let destinationViewController = segue.destination as! DetailViewController
-			if let date = stringDate {
-				destinationViewController.reminderDate = date
-			}
+			destinationViewController.reminderDate = stringDate
 			destinationViewController.reminderNote = noteTextField.text
 		}
-	}
+	}*/
 	
 	// MARK: IBActions
 	
@@ -77,7 +86,6 @@ class AddReminderViewController: UIViewController {
 		if noteTextField.text == "" {
 			showAlert(title: "Incomplete Entry", message: "Please enter a note for your reminder")
 		} else {
-			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reminderAdded"), object: nil)
 			performSegue(withIdentifier: "unwind", sender: Any?.self)
 		}
 	}

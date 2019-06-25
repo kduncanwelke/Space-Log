@@ -3,7 +3,7 @@
     <entity name="Entry" representedClassName="Entry" syncable="YES" codeGenerationType="class">
         <attribute name="content" attributeType="String" syncable="YES"/>
         <attribute name="date" attributeType="String" syncable="YES"/>
-        <attribute name="lastEdited" attributeType="String" syncable="YES"/>
+        <attribute name="lastEdited" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="List" inverseName="entry" inverseEntity="List" syncable="YES"/>
         <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Reminder" inverseName="entry" inverseEntity="Reminder" syncable="YES"/>
