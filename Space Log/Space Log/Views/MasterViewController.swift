@@ -11,13 +11,27 @@ import CoreData
 import UserNotifications
 
 class MasterViewController: UITableViewController {
+	
+	// MARK: Variables
+	
+	var searchController = UISearchController(searchResultsController: nil)
+	var searchResults = [Entry]()
 
-	var detailViewController: DetailViewController? = nil
+	//var detailViewController: DetailViewController? = nil
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 		navigationItem.leftBarButtonItem = editButtonItem
+		
+		// search setup
+		searchController.delegate = self
+		searchController.searchResultsUpdater = self
+		searchController.obscuresBackgroundDuringPresentation = false
+		self.definesPresentationContext = true
+		searchController.searchBar.placeholder = "Type to search . . ."
+		navigationItem.searchController = searchController
+		navigationItem.hidesSearchBarWhenScrolling = false
 		
 		if let split = splitViewController {
 			split.preferredDisplayMode = .allVisible
@@ -97,13 +111,24 @@ class MasterViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return EntryManager.entries.count
+		if isFilteringBySearch() {
+			return searchResults.count
+		} else {
+			return EntryManager.entries.count
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> EntryListTableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "entryListCell", for: indexPath) as! EntryListTableViewCell
+		
+		var object: Entry
+		
+		if isFilteringBySearch() {
+			object = searchResults[indexPath.row]
+		} else {
+			object = EntryManager.entries[indexPath.row]
+		}
 
-		let object = EntryManager.entries[indexPath.row]
 		cell.cellTitle.text = object.title
 		cell.cellContent.text = object.content
 		cell.createdDate.text = object.date
@@ -138,16 +163,29 @@ class MasterViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			if EntryManager.entries[indexPath.row].reminder != nil {
-				if let id = EntryManager.entries[indexPath.row].reminder?.id {
+			var entryToDelete: Entry
+			
+			if isFilteringBySearch() {
+				entryToDelete = searchResults[indexPath.row]
+			} else {
+				entryToDelete = EntryManager.entries[indexPath.row]
+			}
+			
+			if entryToDelete.reminder != nil {
+				if let id = entryToDelete.reminder?.id {
 					clearNotification(id: id)
 				}
 			}
 			
-			delete(entry: EntryManager.entries[indexPath.row])
+			delete(entry: entryToDelete)
 			
-			EntryManager.entries.remove(at: indexPath.row)
-		    tableView.deleteRows(at: [indexPath], with: .fade)
+			if isFilteringBySearch() {
+				searchResults.remove(at: indexPath.section)
+				tableView.deleteRows(at: [indexPath], with: .fade)
+			} else {
+				EntryManager.entries.remove(at: indexPath.row)
+				tableView.deleteRows(at: [indexPath], with: .fade)
+			}
 		} else if editingStyle == .insert {
 		    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
 		}
@@ -159,3 +197,39 @@ class MasterViewController: UITableViewController {
 	
 }
 
+// MARK: Extensions
+
+extension MasterViewController: UISearchControllerDelegate, UISearchResultsUpdating {
+	func updateSearchResults(for searchController: UISearchController) {
+		guard let searchText = searchController.searchBar.text else { return }
+		filterSearch(searchText)
+	}
+	
+	func searchBarIsEmpty() -> Bool {
+		return searchController.searchBar.text?.isEmpty ?? true
+	}
+	
+	// return search results based on title and entry body text
+	func filterSearch(_ searchText: String) {
+	
+		searchResults = EntryManager.entries.filter({(entry: Entry) -> Bool in
+			return entry.title!.lowercased().contains(searchText.lowercased()) || entry.content!.lowercased().contains(searchText.lowercased()) || entry.date!.contains(searchText.lowercased())
+		})
+		
+		tableView.reloadData()
+		
+		// scroll to top upon showing results
+		if searchResults.count != 0 {
+			let indexPath = IndexPath(row: 0, section: 0)
+			tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+		}
+	}
+	
+	func isFilteringBySearch() -> Bool {
+		return searchController.isActive && !searchBarIsEmpty()
+	}
+	
+	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+		searchBar.endEditing(true)
+	}
+}
