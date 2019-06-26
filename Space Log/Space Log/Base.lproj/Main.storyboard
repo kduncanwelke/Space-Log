@@ -330,7 +330,7 @@
                         <color key="backgroundColor" red="0.1147345801" green="0.096736518349999995" blue="0.17039062499999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" red="0.70384765625000001" green="0.61499649682737068" blue="0.27358033302089152" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="entryListCell" rowHeight="150" id="WCw-Qf-5nD" customClass="EntryListTableViewCell" customModule="Space_Log" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="entryListCell" rowHeight="150" id="WCw-Qf-5nD" customClass="EntryListTableViewCell" customModule="Space_Log" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">

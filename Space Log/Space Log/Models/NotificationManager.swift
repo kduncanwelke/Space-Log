@@ -12,7 +12,9 @@ import UserNotifications
 struct NotificationManager {
 	
 	static func addTimeBasedNotification(for reminder: Reminder) {
-		let identifier = "\(reminder.id)"
+		guard let id = reminder.id else { return }
+	
+		let identifier = "\(id)"
 		
 		let notificationCenter = UNUserNotificationCenter.current()
 		let notificationContent = UNMutableNotificationContent()

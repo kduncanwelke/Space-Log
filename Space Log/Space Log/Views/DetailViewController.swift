@@ -77,6 +77,13 @@ class DetailViewController: UIViewController {
 		} else {
 			dateLabel.text = setDate()
 			editLabel.text = "N/A"
+			titleTextField.text = "Enter title . . ."
+			contentTextView.text = "Start typing . . ."
+			reminderButton.setTitle("Add?", for: .normal)
+			reminderText.text = "No reminder"
+			editLabel.text = "N/A"
+			checkList.removeAll()
+			tableView.reloadData()
 		}
 	}
 	
@@ -236,6 +243,10 @@ class DetailViewController: UIViewController {
 			return
 		}
 		save()
+		
+		detailItem = nil
+		configureView()
+		_ = self.navigationController?.popToRootViewController(animated: true)
 	}
 	
 	@IBAction func unwindFromReminder(segue: UIStoryboardSegue) {

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 class MasterViewController: UITableViewController {
 
@@ -64,6 +65,13 @@ class MasterViewController: UITableViewController {
 		} catch {
 			print("Failed to save")
 		}
+	}
+	
+	func clearNotification(id: Date) {
+		// remove existing notification
+		let notificationCenter = UNUserNotificationCenter.current()
+		let identifier = "\(id)"
+		notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
 	}
 
 	// MARK: - Segues
@@ -130,6 +138,12 @@ class MasterViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
+			if EntryManager.entries[indexPath.row].reminder != nil {
+				if let id = EntryManager.entries[indexPath.row].reminder?.id {
+					clearNotification(id: id)
+				}
+			}
+			
 			delete(entry: EntryManager.entries[indexPath.row])
 			
 			EntryManager.entries.remove(at: indexPath.row)
