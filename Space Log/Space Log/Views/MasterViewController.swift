@@ -141,16 +141,17 @@ class MasterViewController: UITableViewController {
 			}
 		}()
 		
-		if object.list != nil {
-			cell.hasList.text = "Yes"
+		if object.list != nil && object.reminder != nil {
+			cell.iconIndicator.isHidden = false
+			cell.iconIndicator.image = UIImage(named: "both3")
+		} else if object.list != nil {
+			cell.iconIndicator.isHidden = false
+			cell.iconIndicator.image = UIImage(named: "list3")
+		} else if object.reminder != nil {
+			cell.iconIndicator.isHidden = false
+			cell.iconIndicator.image = UIImage(named: "reminder3")
 		} else {
-			cell.hasList.text = "No"
-		}
-		
-		if object.reminder != nil {
-			cell.hasReminder.text = "Yes"
-		} else {
-			cell.hasReminder.text = "No"
+			cell.iconIndicator.isHidden = true
 		}
 		
 		return cell

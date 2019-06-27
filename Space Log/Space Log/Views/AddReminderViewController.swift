@@ -14,6 +14,8 @@ class AddReminderViewController: UIViewController {
 	
 	@IBOutlet weak var datePicker: UIDatePicker!
 	@IBOutlet weak var noteTextField: UITextField!
+	@IBOutlet weak var deleteButton: UIButton!
+	
 	
 	// MARK: Variables
 	
@@ -35,6 +37,9 @@ class AddReminderViewController: UIViewController {
 				datePicker.date = dateToDisplay
 			}
 			noteTextField.text = note
+			deleteButton.isHidden = false
+		} else {
+			deleteButton.isHidden = true
 		}
 		
 		var currentDate = Date()
@@ -88,6 +93,11 @@ class AddReminderViewController: UIViewController {
 		} else {
 			performSegue(withIdentifier: "unwind", sender: Any?.self)
 		}
+	}
+	
+	@IBAction func deleteButtonPressed(_ sender: UIButton) {
+		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reminderDeleted"), object: nil)
+		self.dismiss(animated: true, completion: nil)
 	}
 	
 	

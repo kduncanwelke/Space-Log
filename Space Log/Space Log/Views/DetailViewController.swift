@@ -28,11 +28,14 @@ class DetailViewController: UIViewController {
 	@IBOutlet weak var listItemTextField: UITextField!
 	@IBOutlet weak var reminderButton: UIButton!
 	@IBOutlet weak var reminderText: UILabel!
+	@IBOutlet weak var addToListButton: UIButton!
 	
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
+		NotificationCenter.default.addObserver(self, selector: #selector(reminderDeleted), name: NSNotification.Name(rawValue: "reminderDeleted"), object: nil)
+		
 		formatter.dateFormat = "MM-dd-yyyy"
 		
 		contentTextView.delegate = self
@@ -42,6 +45,14 @@ class DetailViewController: UIViewController {
 		tableView.dataSource = self
 		tableView.delegate = self
 		tableView.tableFooterView = UIView(frame: .zero)
+		
+		reminderButton.layer.cornerRadius = CGFloat(15.0)
+		reminderButton.clipsToBounds = true
+		reminderButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
+		
+		addToListButton.layer.cornerRadius = CGFloat(15.0)
+		addToListButton.clipsToBounds = true
+		addToListButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
 		
 		configureView()
 	}
@@ -88,6 +99,14 @@ class DetailViewController: UIViewController {
 	}
 	
 	// MARK: Custom functions
+	
+	@objc func reminderDeleted() {
+		detailItem?.reminder = nil
+		reminderDate = nil
+		reminderNote = nil
+		reminderButton.setTitle("   Add?   ", for: .normal)
+		reminderText.text = "No reminder"
+	}
 	
 	func reminderAdded() {
 		reminderButton.setTitle("   Edit?   ", for: .normal)
@@ -168,6 +187,8 @@ class DetailViewController: UIViewController {
 			list = List(context: managedContext)
 			list?.items = checkList
 			currentEntry.list = list
+		} else {
+			currentEntry.list = nil
 		}
 		
 		if let date = reminderDate, let note = reminderNote {
