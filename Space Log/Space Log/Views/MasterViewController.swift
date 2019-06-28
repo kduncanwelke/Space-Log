@@ -16,6 +16,7 @@ class MasterViewController: UITableViewController {
 	
 	var searchController = UISearchController(searchResultsController: nil)
 	var searchResults = [Entry]()
+	var addTapped = false
 
 	//var detailViewController: DetailViewController? = nil
 
@@ -94,7 +95,11 @@ class MasterViewController: UITableViewController {
 		if segue.identifier == "showDetail" {
 			let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
 			
-		    if let indexPath = tableView.indexPathForSelectedRow {
+			if addTapped {
+				controller.detailItem = nil
+				addTapped = false
+				tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: false)
+			} else if let indexPath = tableView.indexPathForSelectedRow {
 		        let object = EntryManager.entries[indexPath.row]
 				controller.detailItem = object
 			}
@@ -142,16 +147,13 @@ class MasterViewController: UITableViewController {
 		}()
 		
 		if object.list != nil && object.reminder != nil {
-			cell.iconIndicator.isHidden = false
 			cell.iconIndicator.image = UIImage(named: "both3")
 		} else if object.list != nil {
-			cell.iconIndicator.isHidden = false
 			cell.iconIndicator.image = UIImage(named: "list3")
 		} else if object.reminder != nil {
-			cell.iconIndicator.isHidden = false
 			cell.iconIndicator.image = UIImage(named: "reminder3")
 		} else {
-			cell.iconIndicator.isHidden = true
+			cell.iconIndicator.image = UIImage(named: "none3")
 		}
 		
 		return cell
@@ -193,9 +195,9 @@ class MasterViewController: UITableViewController {
 	}
 
 	@IBAction func addTapped(_ sender: UIBarButtonItem) {
+		addTapped = true
 		performSegue(withIdentifier: "showDetail", sender: Any?.self)
 	}
-	
 }
 
 // MARK: Extensions

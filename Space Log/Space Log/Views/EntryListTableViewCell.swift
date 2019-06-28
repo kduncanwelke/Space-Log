@@ -23,10 +23,14 @@ class EntryListTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+	override func setSelected(_ selected: Bool, animated: Bool) {
+		super.setSelected(selected, animated: animated)
+		
+		if selected {
+			self.contentView.backgroundColor = UIColor(red:0.09, green:0.04, blue:0.10, alpha:1.0)
+		} else {
+			self.contentView.backgroundColor = UIColor(red:0.11, green:0.10, blue:0.17, alpha:1.0)
+		}
+	}
 
 }

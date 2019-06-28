@@ -17,6 +17,7 @@ class DetailViewController: UIViewController {
 	var reminderDate: String?
 	var reminderNote: String?
 	var formatter = DateFormatter()
+	var extendedFormatter = DateFormatter()
 	
 	// MARK: IBOutlets
 	
@@ -37,6 +38,7 @@ class DetailViewController: UIViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(reminderDeleted), name: NSNotification.Name(rawValue: "reminderDeleted"), object: nil)
 		
 		formatter.dateFormat = "MM-dd-yyyy"
+		extendedFormatter.dateFormat = "yyyy-MM-dd 'at' hh:mm a"
 		
 		contentTextView.delegate = self
 		titleTextField.delegate = self
@@ -77,8 +79,12 @@ class DetailViewController: UIViewController {
 				reminderDate = reminder.date
 				reminderNote = reminder.note
 				
-				if let date = reminder.date {
-					reminderText.text = "Reminder on \(date)"
+				if let date = reminder.date, let convertedDate = getDate(from: date) {
+					if convertedDate < Date() {
+						reminderText.text = "This reminder has expired"
+					} else {
+						reminderText.text = "Reminder on \(date)"
+					}
 				}
 			}
 			
@@ -130,7 +136,7 @@ class DetailViewController: UIViewController {
 	}
 	
 	func getDate(from stringDate: String) -> Date? {
-		guard let createdDate = formatter.date(from: stringDate) else {
+		guard let createdDate = extendedFormatter.date(from: stringDate) else {
 			print("date conversion failed")
 			return nil
 		}
@@ -229,7 +235,7 @@ class DetailViewController: UIViewController {
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "addReminder" && detailItem?.reminder != nil {
+		if segue.identifier == "addReminder" {
 			let destinationViewController = segue.destination as! AddReminderViewController
 			destinationViewController.note = reminderNote
 			destinationViewController.stringDate = reminderDate
