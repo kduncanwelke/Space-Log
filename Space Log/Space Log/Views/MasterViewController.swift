@@ -17,6 +17,7 @@ class MasterViewController: UITableViewController {
 	var searchController = UISearchController(searchResultsController: nil)
 	var searchResults = [Entry]()
 	var addTapped = false
+	var isDeleting = false
 
 	//var detailViewController: DetailViewController? = nil
 
@@ -62,7 +63,13 @@ class MasterViewController: UITableViewController {
 			showAlert(title: "Could not retrieve data", message: "\(error.userInfo)")
 		}
 		
-		tableView.reloadData()
+		if isDeleting == false {
+			tableView.reloadData()
+		} else {
+			// don't reload table as it breaks delete animation, reset bool
+			isDeleting = false
+		}
+		
 	}
 	
 	@objc func reload() {
@@ -98,7 +105,10 @@ class MasterViewController: UITableViewController {
 			if addTapped {
 				controller.detailItem = nil
 				addTapped = false
-				tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: false)
+				
+				if tableView.indexPathForSelectedRow != nil {
+					tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: false)
+				}
 			} else if let indexPath = tableView.indexPathForSelectedRow {
 		        let object = EntryManager.entries[indexPath.row]
 				controller.detailItem = object
@@ -189,6 +199,10 @@ class MasterViewController: UITableViewController {
 				EntryManager.entries.remove(at: indexPath.row)
 				tableView.deleteRows(at: [indexPath], with: .fade)
 			}
+			
+			isDeleting = true
+			
+			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
 		} else if editingStyle == .insert {
 		    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
 		}
@@ -216,7 +230,7 @@ extension MasterViewController: UISearchControllerDelegate, UISearchResultsUpdat
 	func filterSearch(_ searchText: String) {
 	
 		searchResults = EntryManager.entries.filter({(entry: Entry) -> Bool in
-			return entry.title!.lowercased().contains(searchText.lowercased()) || entry.content!.lowercased().contains(searchText.lowercased()) || entry.date!.contains(searchText.lowercased())
+			return entry.title?.lowercased().contains(searchText.lowercased()) ?? false || entry.content?.lowercased().contains(searchText.lowercased()) ?? false || entry.date?.contains(searchText.lowercased()) ?? false
 		})
 		
 		tableView.reloadData()
