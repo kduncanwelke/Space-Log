@@ -5,8 +5,13 @@
         <attribute name="date" attributeType="String" syncable="YES"/>
         <attribute name="lastEdited" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="link" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Link" inverseName="entry" inverseEntity="Link" syncable="YES"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="List" inverseName="entry" inverseEntity="List" syncable="YES"/>
         <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Reminder" inverseName="entry" inverseEntity="Reminder" syncable="YES"/>
+    </entity>
+    <entity name="Link" representedClassName="Link" syncable="YES" codeGenerationType="class">
+        <attribute name="url" attributeType="String" syncable="YES"/>
+        <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entry" inverseName="link" inverseEntity="Entry" syncable="YES"/>
     </entity>
     <entity name="List" representedClassName="List" syncable="YES" codeGenerationType="class">
         <attribute name="items" attributeType="Transformable" customClassName="[CheckListItem]" syncable="YES"/>
@@ -19,8 +24,9 @@
         <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entry" inverseName="reminder" inverseEntity="Entry" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Entry" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="Entry" positionX="-63" positionY="-18" width="128" height="150"/>
         <element name="List" positionX="-54" positionY="27" width="128" height="75"/>
         <element name="Reminder" positionX="-63" positionY="9" width="128" height="105"/>
+        <element name="Link" positionX="-54" positionY="36" width="128" height="75"/>
     </elements>
 </model>

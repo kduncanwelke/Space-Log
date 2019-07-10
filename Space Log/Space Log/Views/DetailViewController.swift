@@ -25,10 +25,15 @@ class DetailViewController: UIViewController {
 	@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var editLabel: UILabel!
 	@IBOutlet weak var contentTextView: UITextView!
+	
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var listItemTextField: UITextField!
 	@IBOutlet weak var reminderButton: UIButton!
 	@IBOutlet weak var reminderText: UILabel!
+	
+	@IBOutlet weak var linkTextField: UITextField!
+	@IBOutlet weak var goButton: UIButton!
+	
 	@IBOutlet weak var addToListButton: UIButton!
 	
 
@@ -86,6 +91,10 @@ class DetailViewController: UIViewController {
 						reminderText.text = "Reminder on \(date)"
 					}
 				}
+			}
+			
+			if let link = detail.link {
+				linkTextField.text = link.url
 			}
 			
 			guard let savedList = detail.list, let listItems = savedList.items else { return }
@@ -150,6 +159,14 @@ class DetailViewController: UIViewController {
 			// if there is no current entry being edited, add a new one
 			let newEntry = Entry(context: managedContext)
 			
+			if linkTextField.text != nil {
+				var link: Link?
+				link = Link(context: managedContext)
+				link?.url = linkTextField.text
+				
+				newEntry.link = link
+			}
+			
 			if checkList.count != 0 {
 				var list: List?
 				list = List(context: managedContext)
@@ -195,6 +212,16 @@ class DetailViewController: UIViewController {
 			currentEntry.list = list
 		} else {
 			currentEntry.list = nil
+		}
+		
+		if linkTextField.text != nil {
+			var link: Link?
+			link = Link(context: managedContext)
+			link?.url = linkTextField.text
+			
+			currentEntry.link = link
+		} else {
+			currentEntry.link = nil
 		}
 		
 		if let date = reminderDate, let note = reminderNote {
@@ -260,6 +287,14 @@ class DetailViewController: UIViewController {
 		tableView.reloadData()
 	}
 	
+	@IBAction func goPressed(_ sender: UIButton) {
+		guard let linkText = linkTextField.text else { return }
+		
+		if let url = URL(string: linkText) {
+			UIApplication.shared.open(url, options: [:], completionHandler: nil)
+		}
+	}
+	
 	
 	@IBAction func saveTapped(_ sender: UIBarButtonItem) {
 		if titleTextField.text == "Enter title . . ." {
@@ -268,7 +303,17 @@ class DetailViewController: UIViewController {
 		} else if contentTextView.text == "Start typing . . ." {
 			showAlert(title: "Incomplete Entry", message: "Please enter some log content")
 			return
+		} else if linkTextField.text != nil {
+			if let linkText = linkTextField.text, let url = URL(string: linkText) {
+				if UIApplication.shared.canOpenURL(url) {
+					// do nothing, link is fine
+				} else {
+					showAlert(title: "Invalid URL", message: "This link could not be verified - please enter a valid URL")
+					return
+				}
+			}
 		}
+		
 		save()
 		
 		detailItem = nil

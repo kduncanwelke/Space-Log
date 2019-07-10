@@ -40,10 +40,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulk-w0-EiV">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Oya-oR-CZ5">
-                                                <rect key="frame" x="15" y="15" width="384" height="421"/>
+                                                <rect key="frame" x="15" y="15" width="384" height="473"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter title . . ." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5xe-S3-ncf">
                                                         <rect key="frame" x="0.0" y="0.0" width="384" height="30"/>
@@ -117,10 +117,40 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Guk-yc-kCx">
+                                                        <rect key="frame" x="0.0" y="441" width="384" height="32"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="link" translatesAutoresizingMaskIntoConstraints="NO" id="oYb-AA-Xvc">
+                                                                <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" secondItem="oYb-AA-Xvc" secondAttribute="height" multiplier="1:1" id="oPa-BH-B53"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Paste link . . ." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2Lv-no-XfQ">
+                                                                <rect key="frame" x="37" y="0.0" width="310" height="32"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="32" id="1xt-0Y-G9Y"/>
+                                                                </constraints>
+                                                                <nil key="textColor"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" textContentType="url"/>
+                                                            </textField>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exf-ar-v4E">
+                                                                <rect key="frame" x="352" y="0.0" width="32" height="32"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" secondItem="exf-ar-v4E" secondAttribute="height" multiplier="1:1" id="Dmi-Qm-uXB"/>
+                                                                </constraints>
+                                                                <state key="normal" image="go"/>
+                                                                <connections>
+                                                                    <action selector="goPressed:" destination="JEX-9P-axG" eventType="touchUpInside" id="YaF-CY-GQt"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
                                                 </subviews>
                                             </stackView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4G9-FI-xCc">
-                                                <rect key="frame" x="0.0" y="506" width="414" height="268"/>
+                                                <rect key="frame" x="0.0" y="558" width="414" height="250"/>
                                                 <color key="backgroundColor" red="0.1147345801" green="0.096736518349999995" blue="0.17039062499999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="FgS-Bx-X7o"/>
@@ -171,7 +201,7 @@
                                                 <sections/>
                                             </tableView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="OPu-EL-qLM">
-                                                <rect key="frame" x="20" y="456" width="374" height="30"/>
+                                                <rect key="frame" x="20" y="508" width="374" height="30"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter title . . ." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fe7-a0-Kjf">
                                                         <rect key="frame" x="0.0" y="0.0" width="221.5" height="30"/>
@@ -244,6 +274,8 @@
                         <outlet property="contentTextView" destination="att-qD-vbj" id="bGz-G3-7ZL"/>
                         <outlet property="dateLabel" destination="Xwm-v8-ZpD" id="P1p-8A-S5H"/>
                         <outlet property="editLabel" destination="FwQ-Wq-bop" id="LtV-eV-XFE"/>
+                        <outlet property="goButton" destination="exf-ar-v4E" id="Avk-ij-kv2"/>
+                        <outlet property="linkTextField" destination="2Lv-no-XfQ" id="5NN-nS-gbW"/>
                         <outlet property="listItemTextField" destination="fe7-a0-Kjf" id="EW5-WZ-az6"/>
                         <outlet property="reminderButton" destination="4ov-fR-llh" id="0Nf-Z8-p0b"/>
                         <outlet property="reminderText" destination="IST-mu-j7e" id="ZsA-xB-ivn"/>
@@ -512,6 +544,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="go" width="220" height="220"/>
+        <image name="link" width="220" height="220"/>
         <image name="none3" width="560" height="100"/>
         <image name="unchecked" width="30" height="30"/>
     </resources>
