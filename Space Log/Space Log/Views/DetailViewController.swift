@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	// MARK: Variables
 	
@@ -18,6 +18,11 @@ class DetailViewController: UIViewController {
 	var reminderNote: String?
 	var formatter = DateFormatter()
 	var extendedFormatter = DateFormatter()
+	var photos: [UIImage] = [UIImage(named: "add")!]
+	var imagePicker = UIImagePickerController()
+	var filePaths: [String] = []
+	var tappedImage: UIImage?
+	var currentIndex = 0
 	
 	// MARK: IBOutlets
 	
@@ -31,6 +36,8 @@ class DetailViewController: UIViewController {
 	@IBOutlet weak var reminderButton: UIButton!
 	@IBOutlet weak var reminderText: UILabel!
 	
+	@IBOutlet weak var collectionView: UICollectionView!
+	
 	@IBOutlet weak var linkTextField: UITextField!
 	@IBOutlet weak var goButton: UIButton!
 	
@@ -41,6 +48,14 @@ class DetailViewController: UIViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 		NotificationCenter.default.addObserver(self, selector: #selector(reminderDeleted), name: NSNotification.Name(rawValue: "reminderDeleted"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(photoDeleted), name: NSNotification.Name(rawValue: "photoDeleted"), object: nil)
+		
+		collectionView.dataSource = self
+		collectionView.delegate = self
+		
+		imagePicker.delegate = self
+		imagePicker.allowsEditing = false
+		imagePicker.sourceType = .photoLibrary
 		
 		formatter.dateFormat = "MM-dd-yyyy"
 		extendedFormatter.dateFormat = "yyyy-MM-dd 'at' hh:mm a"
@@ -64,6 +79,7 @@ class DetailViewController: UIViewController {
 		configureView()
 	}
 	
+	// MARK: Custom functions
 	
 	func configureView() {
 		// Update the user interface for the detail item.
@@ -93,6 +109,23 @@ class DetailViewController: UIViewController {
 				}
 			}
 			
+			if let photoList = detail.images, let pathsList = photoList.photoPaths {
+				for filePath in pathsList {
+					let path = DocumentsManager.documentsURL.appendingPathComponent(filePath).path
+					if FileManager.default.fileExists(atPath: path) {
+						if let contents = UIImage(contentsOfFile: path) {
+							photos.append(contents)
+							filePaths.append(filePath)
+							print("added")
+						}
+					} else {
+						print("not found")
+					}
+				}
+				
+				collectionView.reloadData()
+			}
+			
 			if let link = detail.link {
 				linkTextField.text = link.url
 			}
@@ -113,14 +146,47 @@ class DetailViewController: UIViewController {
 		}
 	}
 	
-	// MARK: Custom functions
-	
 	@objc func reminderDeleted() {
 		detailItem?.reminder = nil
 		reminderDate = nil
 		reminderNote = nil
 		reminderButton.setTitle("   Add?   ", for: .normal)
 		reminderText.text = "No reminder"
+	}
+	
+	@objc func photoDeleted() {
+		let imageID = filePaths[currentIndex - 1]
+		let imagePath = DocumentsManager.documentsURL.appendingPathComponent(imageID)
+		
+		if DocumentsManager.fileManager.fileExists(atPath: imagePath.path) {
+			do {
+				try DocumentsManager.fileManager.removeItem(at: imagePath)
+				print("image deleted")
+			} catch let error {
+				print("failed to delete with error \(error)")
+			}
+		}
+		
+		// reduce index by 1 for filepaths as default add image is not included like it is in image list
+		filePaths.remove(at: currentIndex - 1)
+		photos.remove(at: currentIndex)
+		collectionView.reloadData()
+	}
+	
+	func addImage(pickedImage: UIImage) {
+		var date = String(Date.timeIntervalSinceReferenceDate)
+		var imageID = date.replacingOccurrences(of: ".", with: "-") + ".png"
+		
+		let filePath = DocumentsManager.documentsURL.appendingPathComponent("\(imageID)")
+		
+		do {
+			if let pngImageData = pickedImage.pngData() {
+				try pngImageData.write(to: filePath)
+				filePaths.append("\(imageID)")
+			}
+		} catch {
+			print("couldn't write image")
+		}
 	}
 	
 	func reminderAdded() {
@@ -175,6 +241,14 @@ class DetailViewController: UIViewController {
 				newEntry.list = list
 			}
 			
+			if filePaths.count != 0 {
+				var images: Images?
+				images = Images(context: managedContext)
+				images?.photoPaths = filePaths
+				print(filePaths)
+				newEntry.images = images
+			}
+			
 			if let date = reminderDate, let note = reminderNote {
 				var reminder: Reminder?
 				reminder = Reminder(context: managedContext)
@@ -212,6 +286,16 @@ class DetailViewController: UIViewController {
 			currentEntry.list = list
 		} else {
 			currentEntry.list = nil
+		}
+		
+		if filePaths.count != 0 {
+			var images: Images?
+			images = Images(context: managedContext)
+			images?.photoPaths = filePaths
+			print(filePaths)
+			currentEntry.images = images
+		} else {
+			currentEntry.images = nil
 		}
 		
 		if linkTextField.text != nil {
@@ -266,6 +350,9 @@ class DetailViewController: UIViewController {
 			let destinationViewController = segue.destination as! AddReminderViewController
 			destinationViewController.note = reminderNote
 			destinationViewController.stringDate = reminderDate
+		} else if segue.identifier == "viewPhoto" {
+			let destinationViewController = segue.destination as? ImageViewController
+			destinationViewController?.image = tappedImage
 		}
 	}
 
@@ -294,7 +381,6 @@ class DetailViewController: UIViewController {
 			UIApplication.shared.open(url, options: [:], completionHandler: nil)
 		}
 	}
-	
 	
 	@IBAction func saveTapped(_ sender: UIBarButtonItem) {
 		if titleTextField.text == "Enter title . . ." {
@@ -410,5 +496,44 @@ extension DetailViewController: UITextFieldDelegate {
 		} else {
 			return
 		}
+	}
+}
+
+extension DetailViewController: UICollectionViewDataSource {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return photos.count
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! PhotoCollectionViewCell
+	
+		cell.image.image = photos[indexPath.row]
+		
+		return cell
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let tappedCell = collectionView.cellForItem(at:indexPath) as! PhotoCollectionViewCell
+		if tappedCell.image.image == UIImage(named: "add") {
+			present(imagePicker, animated: true, completion: nil)
+		} else {
+			tappedImage = tappedCell.image.image
+			currentIndex = indexPath.row
+			print(currentIndex)
+			performSegue(withIdentifier: "viewPhoto", sender: Any?.self)
+		}
+	}
+}
+
+extension DetailViewController {
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+		
+		if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+			photos.append(pickedImage)
+			collectionView.reloadData()
+			addImage(pickedImage: pickedImage)
+		}
+		
+		dismiss(animated: true, completion: nil)
 	}
 }

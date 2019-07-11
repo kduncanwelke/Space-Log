@@ -49,15 +49,13 @@ class AddReminderViewController: UIViewController {
 		datePicker.backgroundColor = UIColor(red:0.36, green:0.41, blue:0.54, alpha:1.0)
 		datePicker.setValue(UIColor.white, forKey: "textColor")
 		
-		if deleteButton.isHidden == false {
-			confirmButton.layer.cornerRadius = CGFloat(15.0)
-			confirmButton.clipsToBounds = true
-			confirmButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
-			
-			deleteButton.layer.cornerRadius = CGFloat(15.0)
-			deleteButton.clipsToBounds = true
-			deleteButton.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
-		}
+		confirmButton.layer.cornerRadius = CGFloat(15.0)
+		confirmButton.clipsToBounds = true
+		confirmButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
+		
+		deleteButton.layer.cornerRadius = CGFloat(15.0)
+		deleteButton.clipsToBounds = true
+		deleteButton.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
     }
 	
 	// MARK: Custom functions
