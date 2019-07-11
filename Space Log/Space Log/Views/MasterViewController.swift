@@ -156,15 +156,30 @@ class MasterViewController: UITableViewController {
 			}
 		}()
 		
-		if object.list != nil && object.reminder != nil {
-			cell.iconIndicator.image = UIImage(named: "both3")
-		} else if object.list != nil {
-			cell.iconIndicator.image = UIImage(named: "list3")
-		} else if object.reminder != nil {
-			cell.iconIndicator.image = UIImage(named: "reminder3")
+		if object.reminder == nil {
+			cell.reminderIndicator.image = UIImage(named: "noreminder")
 		} else {
-			cell.iconIndicator.image = UIImage(named: "none3")
+			cell.reminderIndicator.image = UIImage(named: "reminder")
 		}
+		
+		if object.images == nil {
+			cell.photoIndicator.image = UIImage(named: "nophoto")
+		} else {
+			cell.photoIndicator.image = UIImage(named: "photo")
+		}
+		
+		if object.link == nil {
+			cell.urlIndicator.image = UIImage(named: "nourl")
+		} else {
+			cell.urlIndicator.image = UIImage(named: "url")
+		}
+		
+		if object.list == nil {
+			cell.listIndicator.image = UIImage(named: "nolist")
+		} else {
+			cell.listIndicator.image = UIImage(named: "list")
+		}
+		
 		
 		return cell
 	}

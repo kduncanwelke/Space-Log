@@ -16,7 +16,11 @@ class EntryListTableViewCell: UITableViewCell {
 	@IBOutlet weak var createdDate: UILabel!
 	@IBOutlet weak var editedDate: UILabel!
 	@IBOutlet weak var cellContent: UILabel!
-	@IBOutlet weak var iconIndicator: UIImageView!
+	@IBOutlet weak var reminderIndicator: UIImageView!
+	@IBOutlet weak var photoIndicator: UIImageView!
+	@IBOutlet weak var urlIndicator: UIImageView!
+	@IBOutlet weak var listIndicator: UIImageView!
+	
 	
     override func awakeFromNib() {
         super.awakeFromNib()

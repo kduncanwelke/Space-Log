@@ -143,6 +143,10 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 			editLabel.text = "N/A"
 			checkList.removeAll()
 			tableView.reloadData()
+			filePaths.removeAll()
+			linkTextField.text = ""
+			photos = [UIImage(named: "add")!]
+			collectionView.reloadData()
 		}
 	}
 	
@@ -225,7 +229,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 			// if there is no current entry being edited, add a new one
 			let newEntry = Entry(context: managedContext)
 			
-			if linkTextField.text != nil {
+			if linkTextField.text != "" {
 				var link: Link?
 				link = Link(context: managedContext)
 				link?.url = linkTextField.text
@@ -298,7 +302,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 			currentEntry.images = nil
 		}
 		
-		if linkTextField.text != nil {
+		if linkTextField.text != "" {
 			var link: Link?
 			link = Link(context: managedContext)
 			link?.url = linkTextField.text
