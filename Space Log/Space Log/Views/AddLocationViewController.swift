@@ -18,6 +18,8 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 	@IBOutlet weak var locationLabel: UILabel!
 	@IBOutlet weak var topLabel: UILabel!
 	@IBOutlet weak var addLocationButton: UIButton!
+	@IBOutlet weak var deleteLocationButton: UIButton!
+	
 	
 	// MARK: Variables
 	
@@ -53,14 +55,28 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 		navigationItem.hidesSearchBarWhenScrolling = false
 		definesPresentationContext = true
 		
+		addLocationButton.layer.cornerRadius = CGFloat(15.0)
+		addLocationButton.clipsToBounds = true
+		addLocationButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
+		
+		deleteLocationButton.layer.cornerRadius = CGFloat(15.0)
+		deleteLocationButton.clipsToBounds = true
+		deleteLocationButton.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+		
 		if usingSavedLocation {
 			topLabel.text = "Viewing Saved Location"
 			addLocationButton.setTitle("   Save New Location   ", for: .normal)
 			locationLabel.text = LocationSearch.name
+			
+			deleteLocationButton.backgroundColor = .red
+			deleteLocationButton.isEnabled = true
 		} else {
 			topLabel.text = "Please select a location to associate with this entry"
 			addLocationButton.setTitle("   Add Location   ", for: .normal)
 			locationLabel.text = "-"
+			
+			deleteLocationButton.backgroundColor = .black
+			deleteLocationButton.isEnabled = false
 		}
     }
 	
@@ -146,6 +162,11 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 		LocationSearch.name = name
 		
 		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "locationAdded"), object: nil)
+		self.dismiss(animated: true, completion: nil)
+	}
+	
+	@IBAction func deleteLocationTapped(_ sender: UIButton) {
+		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "locationDeleted"), object: nil)
 		self.dismiss(animated: true, completion: nil)
 	}
 	

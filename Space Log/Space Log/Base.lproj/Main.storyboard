@@ -507,7 +507,7 @@
                                 </connections>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uws-6E-Na8">
-                                <rect key="frame" x="203" y="375" width="8" height="20"/>
+                                <rect key="frame" x="203.5" y="375" width="7.5" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -521,34 +521,54 @@
                                     <action selector="useDeviceLocationTapped:" destination="aTt-1v-1y2" eventType="touchUpInside" id="JQV-4s-UOF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjh-DE-XfC">
-                                <rect key="frame" x="148" y="524" width="118" height="30"/>
-                                <color key="backgroundColor" red="0.35923349910000002" green="0.4104729191" blue="0.54070312499999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="    Add Location   ">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="addLocationTapped:" destination="aTt-1v-1y2" eventType="touchUpInside" id="dhA-Fy-NFl"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Hyb-oo-hdk">
+                                <rect key="frame" x="20" y="525" width="374" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjh-DE-XfC">
+                                        <rect key="frame" x="0.0" y="0.0" width="182" height="30"/>
+                                        <color key="backgroundColor" red="0.35923349910000002" green="0.4104729191" blue="0.54070312499999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="    Add Location   ">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addLocationTapped:" destination="aTt-1v-1y2" eventType="touchUpInside" id="dhA-Fy-NFl"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4a-bW-wiR">
+                                        <rect key="frame" x="192" y="0.0" width="182" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.01658020382" blue="0.2257497903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="   Delete Location   ">
+                                            <color key="titleColor" red="0.1137254902" green="0.098039215690000001" blue="0.16862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deleteLocationTapped:" destination="aTt-1v-1y2" eventType="touchUpInside" id="Iud-98-n8Y"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="400" id="ZS6-Cc-aIy"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.1137254902" green="0.098039215690000001" blue="0.16862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ENU-ib-YzT" firstAttribute="bottom" secondItem="st4-0S-xcR" secondAttribute="bottom" constant="30" id="19s-Fv-Vc0"/>
-                            <constraint firstItem="Fwe-uD-VNx" firstAttribute="top" secondItem="Uws-6E-Na8" secondAttribute="bottom" constant="50" id="2nZ-fS-nj4"/>
+                            <constraint firstItem="Hyb-oo-hdk" firstAttribute="leading" secondItem="ENU-ib-YzT" secondAttribute="leading" priority="750" constant="20" id="4yH-Ya-4Wt"/>
                             <constraint firstItem="st4-0S-xcR" firstAttribute="centerX" secondItem="Sn1-dC-Nc2" secondAttribute="centerX" id="7Z4-Pi-IMg"/>
+                            <constraint firstItem="Fwe-uD-VNx" firstAttribute="top" secondItem="LBD-Be-dTI" secondAttribute="bottom" constant="100" id="AB5-Uz-dCY"/>
                             <constraint firstItem="PD1-MD-avC" firstAttribute="leading" secondItem="ENU-ib-YzT" secondAttribute="leading" constant="30" id="AOv-BA-Mv4"/>
                             <constraint firstAttribute="trailing" secondItem="PD1-MD-avC" secondAttribute="trailing" constant="30" id="EhA-4z-haj"/>
                             <constraint firstItem="LBD-Be-dTI" firstAttribute="height" secondItem="Sn1-dC-Nc2" secondAttribute="height" multiplier="0.33" id="FmF-nl-mJJ"/>
                             <constraint firstItem="PD1-MD-avC" firstAttribute="top" secondItem="ENU-ib-YzT" secondAttribute="top" constant="20" id="Gbg-h9-BuZ"/>
                             <constraint firstItem="ENU-ib-YzT" firstAttribute="trailing" secondItem="LBD-Be-dTI" secondAttribute="trailing" id="My0-XI-Jwx"/>
+                            <constraint firstItem="ENU-ib-YzT" firstAttribute="trailing" secondItem="Hyb-oo-hdk" secondAttribute="trailing" priority="750" constant="20" id="NTj-Qy-FEJ"/>
+                            <constraint firstItem="Hyb-oo-hdk" firstAttribute="top" secondItem="Fwe-uD-VNx" secondAttribute="bottom" constant="50" id="OzY-lp-8Dd"/>
                             <constraint firstItem="LBD-Be-dTI" firstAttribute="leading" secondItem="ENU-ib-YzT" secondAttribute="leading" id="WjE-AA-Zdc"/>
+                            <constraint firstItem="Hyb-oo-hdk" firstAttribute="centerX" secondItem="Sn1-dC-Nc2" secondAttribute="centerX" id="ar2-Sv-MTJ"/>
                             <constraint firstItem="Fwe-uD-VNx" firstAttribute="centerX" secondItem="Sn1-dC-Nc2" secondAttribute="centerX" id="bjA-uF-TTr"/>
                             <constraint firstItem="Uws-6E-Na8" firstAttribute="centerX" secondItem="Sn1-dC-Nc2" secondAttribute="centerX" id="cwA-fw-7mH"/>
                             <constraint firstItem="LBD-Be-dTI" firstAttribute="top" secondItem="PD1-MD-avC" secondAttribute="bottom" constant="20" id="gRO-xK-XTq"/>
                             <constraint firstItem="Uws-6E-Na8" firstAttribute="top" secondItem="LBD-Be-dTI" secondAttribute="bottom" constant="30" id="jve-Lg-xQk"/>
-                            <constraint firstItem="fjh-DE-XfC" firstAttribute="top" secondItem="Fwe-uD-VNx" secondAttribute="bottom" constant="49" id="kQ0-cr-ocg"/>
-                            <constraint firstItem="fjh-DE-XfC" firstAttribute="centerX" secondItem="Sn1-dC-Nc2" secondAttribute="centerX" id="wDW-Pp-it1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ENU-ib-YzT"/>
                     </view>
@@ -556,6 +576,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="addLocationButton" destination="fjh-DE-XfC" id="tKJ-md-Vbj"/>
+                        <outlet property="deleteLocationButton" destination="t4a-bW-wiR" id="Iwq-ho-5C5"/>
                         <outlet property="locationLabel" destination="Uws-6E-Na8" id="tfU-sg-opo"/>
                         <outlet property="mapView" destination="LBD-Be-dTI" id="WgR-5r-Ubt"/>
                         <outlet property="topLabel" destination="PD1-MD-avC" id="YCf-MU-JHu"/>

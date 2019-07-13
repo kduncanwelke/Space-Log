@@ -54,6 +54,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		NotificationCenter.default.addObserver(self, selector: #selector(reminderDeleted), name: NSNotification.Name(rawValue: "reminderDeleted"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(photoDeleted), name: NSNotification.Name(rawValue: "photoDeleted"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(locationAdded), name: NSNotification.Name(rawValue: "locationAdded"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(locationDeleted), name: NSNotification.Name(rawValue: "locationDeleted"), object: nil)
 		
 		collectionView.dataSource = self
 		collectionView.delegate = self
@@ -195,6 +196,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	@objc func locationAdded() {
 		locationLabel.text = LocationSearch.name
 		locationSet = true
+	}
+	
+	@objc func locationDeleted() {
+		locationLabel.text = "No Location"
+		locationSet = false
 	}
 	
 	func addImage(pickedImage: UIImage) {
