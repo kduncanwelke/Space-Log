@@ -7,7 +7,13 @@
 //
 
 import Foundation
+import MapKit
 
 protocol CellCheckDelegate: class {
 	func didChangeSelectedState(sender: CheckListTableViewCell, isChecked: Bool)
+}
+
+// handle updating map location when locale is changed
+protocol MapUpdaterDelegate: class {
+	func updateMapLocation(for: MKPlacemark)
 }

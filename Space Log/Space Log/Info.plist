@@ -49,5 +49,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Access is needed to allow entries to have associated locations.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Access is needed to allow entries to have associated locations.</string>
 </dict>
 </plist>

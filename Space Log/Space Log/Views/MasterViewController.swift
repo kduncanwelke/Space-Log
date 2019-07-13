@@ -180,6 +180,12 @@ class MasterViewController: UITableViewController {
 			cell.listIndicator.image = UIImage(named: "list")
 		}
 		
+		if object.location == nil {
+			cell.location.isHidden = true
+		} else {
+			cell.location.isHidden = false
+		}
+		
 		
 		return cell
 	}

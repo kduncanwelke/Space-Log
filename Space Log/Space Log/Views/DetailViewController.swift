@@ -23,6 +23,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	var filePaths: [String] = []
 	var tappedImage: UIImage?
 	var currentIndex = 0
+	var locationSet = false
 	
 	// MARK: IBOutlets
 	
@@ -33,6 +34,9 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var listItemTextField: UITextField!
+	
+	@IBOutlet weak var locationLabel: UILabel!
+	
 	@IBOutlet weak var reminderButton: UIButton!
 	@IBOutlet weak var reminderText: UILabel!
 	
@@ -49,6 +53,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		// Do any additional setup after loading the view.
 		NotificationCenter.default.addObserver(self, selector: #selector(reminderDeleted), name: NSNotification.Name(rawValue: "reminderDeleted"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(photoDeleted), name: NSNotification.Name(rawValue: "photoDeleted"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(locationAdded), name: NSNotification.Name(rawValue: "locationAdded"), object: nil)
 		
 		collectionView.dataSource = self
 		collectionView.delegate = self
@@ -130,6 +135,14 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 				linkTextField.text = link.url
 			}
 			
+			if let location = detail.location {
+				locationLabel.text = location.name
+				LocationSearch.latitude = location.latitude
+				LocationSearch.longitude = location.longitude
+				LocationSearch.name = location.name ?? "No name"
+				locationSet = true
+			}
+			
 			guard let savedList = detail.list, let listItems = savedList.items else { return }
 			checkList = listItems
 			tableView.reloadData()
@@ -147,6 +160,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 			linkTextField.text = ""
 			photos = [UIImage(named: "add")!]
 			collectionView.reloadData()
+			locationLabel.text = "No Location"
+			locationSet = false
 		}
 	}
 	
@@ -175,6 +190,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		filePaths.remove(at: currentIndex - 1)
 		photos.remove(at: currentIndex)
 		collectionView.reloadData()
+	}
+	
+	@objc func locationAdded() {
+		locationLabel.text = LocationSearch.name
+		locationSet = true
 	}
 	
 	func addImage(pickedImage: UIImage) {
@@ -249,8 +269,18 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 				var images: Images?
 				images = Images(context: managedContext)
 				images?.photoPaths = filePaths
-				print(filePaths)
+		
 				newEntry.images = images
+			}
+			
+			if locationSet {
+				var location: Location?
+				location = Location(context: managedContext)
+				location?.latitude = LocationSearch.latitude
+				location?.longitude = LocationSearch.longitude
+				location?.name = LocationSearch.name
+				
+				newEntry.location = location
 			}
 			
 			if let date = reminderDate, let note = reminderNote {
@@ -300,6 +330,18 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 			currentEntry.images = images
 		} else {
 			currentEntry.images = nil
+		}
+		
+		if locationSet {
+			var location: Location?
+			location = Location(context: managedContext)
+			location?.latitude = LocationSearch.latitude
+			location?.longitude = LocationSearch.longitude
+			location?.name = LocationSearch.name
+			
+			currentEntry.location = location
+		} else {
+			currentEntry.location = nil
 		}
 		
 		if linkTextField.text != "" {
@@ -357,15 +399,22 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		} else if segue.identifier == "viewPhoto" {
 			let destinationViewController = segue.destination as? ImageViewController
 			destinationViewController?.image = tappedImage
+		} else if segue.identifier == "addLocation" {
+			let nav = segue.destination as? UINavigationController
+			let destinationViewController = nav?.topViewController as? AddLocationViewController
+			destinationViewController?.usingSavedLocation = locationSet
 		}
 	}
 
 	// MARK: IBActions
 	
+	@IBAction func addLocationTapped(_ sender: UIButton) {
+		performSegue(withIdentifier: "addLocation", sender: Any?.self)
+	}
+	
 	@IBAction func addReminderTapped(_ sender: UIButton) {
 		performSegue(withIdentifier: "addReminder", sender: Any?.self)
 	}
-	
 	
 	@IBAction func addListItemPressed(_ sender: UIButton) {
 		guard let text = listItemTextField.text else { return }

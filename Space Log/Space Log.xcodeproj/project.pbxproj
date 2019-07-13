@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2D0C7D5322BEBB1700B4830A /* EntryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0C7D5222BEBB1700B4830A /* EntryListTableViewCell.swift */; };
 		2D0C7D5522BEC75500B4830A /* AddReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0C7D5422BEC75500B4830A /* AddReminderViewController.swift */; };
+		2D22352E22D9356E0055E5B9 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D22352D22D9356E0055E5B9 /* AddLocationViewController.swift */; };
+		2D22353022D938A10055E5B9 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D22352F22D938A10055E5B9 /* SearchTableViewController.swift */; };
+		2D22353222D93A440055E5B9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D22353122D93A440055E5B9 /* LocationManager.swift */; };
 		2D60391A22D684C200F40780 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D60391922D684C200F40780 /* PhotoCollectionViewCell.swift */; };
 		2D87E23122BBFB8400A9266D /* CheckListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D87E23022BBFB8400A9266D /* CheckListItem.swift */; };
 		2D87E23522BC001300A9266D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D87E23422BC001300A9266D /* Extensions.swift */; };
@@ -42,6 +45,9 @@
 /* Begin PBXFileReference section */
 		2D0C7D5222BEBB1700B4830A /* EntryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryListTableViewCell.swift; sourceTree = "<group>"; };
 		2D0C7D5422BEC75500B4830A /* AddReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderViewController.swift; sourceTree = "<group>"; };
+		2D22352D22D9356E0055E5B9 /* AddLocationViewController.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
+		2D22352F22D938A10055E5B9 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		2D22353122D93A440055E5B9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		2D60391922D684C200F40780 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		2D87E23022BBFB8400A9266D /* CheckListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListItem.swift; sourceTree = "<group>"; };
 		2D87E23422BC001300A9266D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -93,6 +99,7 @@
 				2D87E23822BC24DF00A9266D /* EntryManager.swift */,
 				2D98D00422C1489C00777FB9 /* NotificationManager.swift */,
 				2DB3049B22D7975B00BAD0E1 /* DocumentsManager.swift */,
+				2D22353122D93A440055E5B9 /* LocationManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -107,6 +114,8 @@
 				2D95C84E22BD5689004441C3 /* CheckListTableViewCell.swift */,
 				2D0C7D5422BEC75500B4830A /* AddReminderViewController.swift */,
 				2DB3049D22D79CB700BAD0E1 /* ImageViewController.swift */,
+				2D22352D22D9356E0055E5B9 /* AddLocationViewController.swift */,
+				2D22352F22D938A10055E5B9 /* SearchTableViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -263,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DC47C5622BAE5E800315A1F /* Entry.xcdatamodeld in Sources */,
+				2D22353022D938A10055E5B9 /* SearchTableViewController.swift in Sources */,
 				2D0C7D5322BEBB1700B4830A /* EntryListTableViewCell.swift in Sources */,
 				2D87E23522BC001300A9266D /* Extensions.swift in Sources */,
 				2D87E23922BC24DF00A9266D /* EntryManager.swift in Sources */,
@@ -276,7 +286,9 @@
 				2D87E23722BC247D00A9266D /* CoreDataManager.swift in Sources */,
 				2D60391A22D684C200F40780 /* PhotoCollectionViewCell.swift in Sources */,
 				2DC47C3322BAE45800315A1F /* AppDelegate.swift in Sources */,
+				2D22352E22D9356E0055E5B9 /* AddLocationViewController.swift in Sources */,
 				2DA38ACB22BEA5CA00FE6393 /* Protocol.swift in Sources */,
+				2D22353222D93A440055E5B9 /* LocationManager.swift in Sources */,
 				2DB3049C22D7975B00BAD0E1 /* DocumentsManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

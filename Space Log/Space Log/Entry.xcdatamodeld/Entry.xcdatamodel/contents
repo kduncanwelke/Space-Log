@@ -8,6 +8,7 @@
         <relationship name="images" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Images" inverseName="entry" inverseEntity="Images" syncable="YES"/>
         <relationship name="link" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Link" inverseName="entry" inverseEntity="Link" syncable="YES"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="List" inverseName="entry" inverseEntity="List" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Location" syncable="YES"/>
         <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Reminder" inverseName="entry" inverseEntity="Reminder" syncable="YES"/>
     </entity>
     <entity name="Images" representedClassName="Images" syncable="YES" codeGenerationType="class">
@@ -22,6 +23,12 @@
         <attribute name="items" attributeType="Transformable" customClassName="[CheckListItem]" syncable="YES"/>
         <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entry" inverseName="list" inverseEntity="Entry" syncable="YES"/>
     </entity>
+    <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
+        <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="entry" inverseEntity="Location" syncable="YES"/>
+    </entity>
     <entity name="Reminder" representedClassName="Reminder" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="String" syncable="YES"/>
         <attribute name="id" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -29,10 +36,11 @@
         <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entry" inverseName="reminder" inverseEntity="Entry" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Entry" positionX="-63" positionY="-18" width="128" height="165"/>
         <element name="Images" positionX="-45" positionY="54" width="128" height="75"/>
         <element name="Link" positionX="-54" positionY="36" width="128" height="75"/>
         <element name="List" positionX="-54" positionY="27" width="128" height="75"/>
         <element name="Reminder" positionX="-63" positionY="9" width="128" height="105"/>
+        <element name="Location" positionX="-54" positionY="54" width="128" height="105"/>
+        <element name="Entry" positionX="-45" positionY="9" width="128" height="180"/>
     </elements>
 </model>
