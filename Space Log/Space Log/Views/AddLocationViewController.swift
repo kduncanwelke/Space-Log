@@ -20,7 +20,6 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 	@IBOutlet weak var addLocationButton: UIButton!
 	@IBOutlet weak var deleteLocationButton: UIButton!
 	
-	
 	// MARK: Variables
 	
 	var locationFromMapOrCurrent = false
@@ -80,6 +79,22 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 		}
     }
 	
+	override func viewDidAppear(_ animated: Bool) {
+		// perform check for location services access, as this is the main area that depends on location
+		if CLLocationManager.locationServicesEnabled() {
+			switch CLLocationManager.authorizationStatus() {
+			case .notDetermined, .restricted, .denied:
+				showSettingsAlert(title: "Location undetermined", message: "Location services have not been enabled. Device location will not be detectable until settings are adjusted.")
+			case .authorizedAlways, .authorizedWhenInUse:
+				print("access")
+			@unknown default:
+				return
+			}
+		} else {
+			showAlert(title: "Notice", message: "Location services are not available - location will have to be selected for entries manually.")
+		}
+	}
+	
 	// MARK: Custom functions
 	
 	func updateLocation(location: MKPlacemark) {
@@ -121,16 +136,6 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 		
 		locationLabel.text = annotation.title
 	}
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 	
 	// MARK: IBActions
 	
@@ -176,6 +181,8 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 	}
 	
 }
+
+// MARK: Extensions
 
 extension AddLocationViewController: MapUpdaterDelegate {
 	// delegate used to pass location from search

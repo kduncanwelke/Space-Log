@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class AddReminderViewController: UIViewController {
 	
@@ -58,6 +59,26 @@ class AddReminderViewController: UIViewController {
 		deleteButton.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
     }
 	
+	override func viewDidAppear(_ animated: Bool) {
+		// check if notifications are enabled, as this is the first point of use
+		UNUserNotificationCenter.current().getNotificationSettings(){ [unowned self] (settings) in
+			switch settings.alertSetting {
+			case .enabled:
+				break
+			case .disabled:
+				DispatchQueue.main.async {
+					self.showSettingsAlert(title: "Notifications disabled", message: "Reminders require access to notification sevices to provide local notifications. These notifications will not be displayed unless settings are adjusted.")
+				}
+			case .notSupported:
+				DispatchQueue.main.async {
+					self.showSettingsAlert(title: "Notifications not supported", message: "Notifications will not be displayed, as the service is not available on this device.")
+				}
+			@unknown default:
+				return
+			}
+		}
+	}
+	
 	// MARK: Custom functions
 	
 	func getDate(from stringDate: String) -> Date? {
@@ -76,24 +97,6 @@ class AddReminderViewController: UIViewController {
 	@objc func datePickerChanged(picker: UIDatePicker) {
 		stringDate = setDate(date: datePicker.date)
 	}
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-	
-	/*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "unwind" {
-			let destinationViewController = segue.destination as! DetailViewController
-			destinationViewController.reminderDate = stringDate
-			destinationViewController.reminderNote = noteTextField.text
-		}
-	}*/
 	
 	// MARK: IBActions
 	

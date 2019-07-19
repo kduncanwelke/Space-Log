@@ -205,9 +205,29 @@ class MasterViewController: UITableViewController {
 				entryToDelete = EntryManager.entries[indexPath.row]
 			}
 			
+			// delete any reminder with its associated notification
 			if entryToDelete.reminder != nil {
 				if let id = entryToDelete.reminder?.id {
 					clearNotification(id: id)
+				}
+			}
+			
+			// delete any images that are saved in documents manager
+			if entryToDelete.images != nil {
+				if let pathsList = entryToDelete.images?.photoPaths {
+					for path in pathsList {
+						let imageID = path
+						let imagePath = DocumentsManager.documentsURL.appendingPathComponent(imageID)
+						
+						if DocumentsManager.fileManager.fileExists(atPath: imagePath.path) {
+							do {
+								try DocumentsManager.fileManager.removeItem(at: imagePath)
+								print("image deleted")
+							} catch let error {
+								print("failed to delete with error \(error)")
+							}
+						}
+					}
 				}
 			}
 			

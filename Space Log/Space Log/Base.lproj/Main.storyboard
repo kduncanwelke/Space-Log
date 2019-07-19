@@ -95,7 +95,7 @@
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
-                                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QtQ-98-Qkj">
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QtQ-98-Qkj">
                                                                         <rect key="frame" x="0.0" y="17.5" width="87.5" height="12.5"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edited" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gIj-0C-oKZ">
@@ -263,7 +263,7 @@
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="FgS-Bx-X7o"/>
                                                 </constraints>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checkListCell" rowHeight="60" id="qhH-kz-GIr" customClass="CheckListTableViewCell" customModule="Space_Log" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checkListCell" rowHeight="60" id="qhH-kz-GIr" customClass="CheckListTableViewCell" customModule="Space_Log" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="28" width="414" height="60"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qhH-kz-GIr" id="7DY-BQ-baN">
@@ -372,6 +372,7 @@
                         <outlet property="locationLabel" destination="Bwi-U6-JCj" id="hyM-Yk-gxY"/>
                         <outlet property="reminderButton" destination="4ov-fR-llh" id="0Nf-Z8-p0b"/>
                         <outlet property="reminderText" destination="IST-mu-j7e" id="ZsA-xB-ivn"/>
+                        <outlet property="scrollView" destination="T6Z-0F-4ic" id="p22-Ps-kgm"/>
                         <outlet property="tableView" destination="4G9-FI-xCc" id="upt-jI-H2V"/>
                         <outlet property="titleTextField" destination="5xe-S3-ncf" id="Vji-gq-uFS"/>
                         <segue destination="evR-rO-c8f" kind="presentation" identifier="addReminder" id="cUQ-nf-2qh"/>
@@ -462,6 +463,7 @@
                         <viewLayoutGuide key="safeArea" id="5RV-ta-pgt"/>
                     </view>
                     <connections>
+                        <outlet property="buttonView" destination="hV9-OS-VS1" id="HT0-gz-rXr"/>
                         <outlet property="deleteButton" destination="gx6-uq-ltA" id="jEB-JM-HNC"/>
                         <outlet property="dismissButton" destination="Ok8-th-jj5" id="ona-uB-BtC"/>
                         <outlet property="imageBottom" destination="Xzl-la-ewJ" id="u0t-0S-WHz"/>
@@ -513,7 +515,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fwe-uD-VNx">
-                                <rect key="frame" x="114.5" y="445" width="185" height="30"/>
+                                <rect key="frame" x="114.5" y="425" width="185" height="30"/>
                                 <state key="normal" title="Use This Device's Location">
                                     <color key="titleColor" red="0.1215686275" green="0.74117647060000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -522,7 +524,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Hyb-oo-hdk">
-                                <rect key="frame" x="20" y="525" width="374" height="30"/>
+                                <rect key="frame" x="20" y="495" width="374" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjh-DE-XfC">
                                         <rect key="frame" x="0.0" y="0.0" width="182" height="30"/>
@@ -555,20 +557,21 @@
                             <constraint firstItem="ENU-ib-YzT" firstAttribute="bottom" secondItem="st4-0S-xcR" secondAttribute="bottom" constant="30" id="19s-Fv-Vc0"/>
                             <constraint firstItem="Hyb-oo-hdk" firstAttribute="leading" secondItem="ENU-ib-YzT" secondAttribute="leading" priority="750" constant="20" id="4yH-Ya-4Wt"/>
                             <constraint firstItem="st4-0S-xcR" firstAttribute="centerX" secondItem="Sn1-dC-Nc2" secondAttribute="centerX" id="7Z4-Pi-IMg"/>
-                            <constraint firstItem="Fwe-uD-VNx" firstAttribute="top" secondItem="LBD-Be-dTI" secondAttribute="bottom" constant="100" id="AB5-Uz-dCY"/>
+                            <constraint firstItem="Fwe-uD-VNx" firstAttribute="top" secondItem="LBD-Be-dTI" secondAttribute="bottom" constant="80" id="AB5-Uz-dCY"/>
                             <constraint firstItem="PD1-MD-avC" firstAttribute="leading" secondItem="ENU-ib-YzT" secondAttribute="leading" constant="30" id="AOv-BA-Mv4"/>
                             <constraint firstAttribute="trailing" secondItem="PD1-MD-avC" secondAttribute="trailing" constant="30" id="EhA-4z-haj"/>
                             <constraint firstItem="LBD-Be-dTI" firstAttribute="height" secondItem="Sn1-dC-Nc2" secondAttribute="height" multiplier="0.33" id="FmF-nl-mJJ"/>
                             <constraint firstItem="PD1-MD-avC" firstAttribute="top" secondItem="ENU-ib-YzT" secondAttribute="top" constant="20" id="Gbg-h9-BuZ"/>
                             <constraint firstItem="ENU-ib-YzT" firstAttribute="trailing" secondItem="LBD-Be-dTI" secondAttribute="trailing" id="My0-XI-Jwx"/>
                             <constraint firstItem="ENU-ib-YzT" firstAttribute="trailing" secondItem="Hyb-oo-hdk" secondAttribute="trailing" priority="750" constant="20" id="NTj-Qy-FEJ"/>
-                            <constraint firstItem="Hyb-oo-hdk" firstAttribute="top" secondItem="Fwe-uD-VNx" secondAttribute="bottom" constant="50" id="OzY-lp-8Dd"/>
+                            <constraint firstItem="Hyb-oo-hdk" firstAttribute="top" secondItem="Fwe-uD-VNx" secondAttribute="bottom" constant="40" id="OzY-lp-8Dd"/>
                             <constraint firstItem="LBD-Be-dTI" firstAttribute="leading" secondItem="ENU-ib-YzT" secondAttribute="leading" id="WjE-AA-Zdc"/>
                             <constraint firstItem="Hyb-oo-hdk" firstAttribute="centerX" secondItem="Sn1-dC-Nc2" secondAttribute="centerX" id="ar2-Sv-MTJ"/>
                             <constraint firstItem="Fwe-uD-VNx" firstAttribute="centerX" secondItem="Sn1-dC-Nc2" secondAttribute="centerX" id="bjA-uF-TTr"/>
                             <constraint firstItem="Uws-6E-Na8" firstAttribute="centerX" secondItem="Sn1-dC-Nc2" secondAttribute="centerX" id="cwA-fw-7mH"/>
                             <constraint firstItem="LBD-Be-dTI" firstAttribute="top" secondItem="PD1-MD-avC" secondAttribute="bottom" constant="20" id="gRO-xK-XTq"/>
                             <constraint firstItem="Uws-6E-Na8" firstAttribute="top" secondItem="LBD-Be-dTI" secondAttribute="bottom" constant="30" id="jve-Lg-xQk"/>
+                            <constraint firstItem="st4-0S-xcR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Hyb-oo-hdk" secondAttribute="bottom" constant="10" id="yb3-0M-9zJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ENU-ib-YzT"/>
                     </view>
@@ -651,7 +654,7 @@
                             </label>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="QEt-Bs-nyj">
                                 <rect key="frame" x="0.0" y="113.5" width="414" height="216"/>
-                                <color key="backgroundColor" red="0.36078431372549019" green="0.41176470588235292" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.39496075349999998" green="0.60435955289999999" blue="0.69212890630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <date key="date" timeIntervalSinceReferenceDate="582927639.01627302">
                                     <!--2019-06-22 20:20:39 +0000-->
                                 </date>

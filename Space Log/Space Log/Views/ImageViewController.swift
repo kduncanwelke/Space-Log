@@ -20,6 +20,7 @@ class ImageViewController: UIViewController {
 	@IBOutlet weak var imageTop: NSLayoutConstraint!
 	@IBOutlet weak var imageBottom: NSLayoutConstraint!
 	@IBOutlet weak var imageTrailing: NSLayoutConstraint!
+	@IBOutlet weak var buttonView: UIView!
 	
 	// MARK: Variables
 	
@@ -56,11 +57,11 @@ class ImageViewController: UIViewController {
 		let boundsSize = view.bounds.size
 		let imageSize = imageView.bounds.size
 		
-		let xScale = boundsSize.width / imageSize.width
-		let yScale = boundsSize.height / imageSize.height
+		let xScale = 1 + (1 * (imageSize.width / boundsSize.width))
+		let yScale = 1 + (1 * (imageSize.height / boundsSize.height))
 		
 		let maxScale = max(xScale, yScale)
-		
+			
 		scrollView.maximumZoomScale = maxScale
 		scrollView.minimumZoomScale = 1
 	}
@@ -79,23 +80,13 @@ class ImageViewController: UIViewController {
 		
 		// center vertically
 		if frameToCenter.size.height < boundsSize.height {
-			frameToCenter.origin.y = (boundsSize.height - frameToCenter.size.height)/2
+			frameToCenter.origin.y = (boundsSize.height - (frameToCenter.size.height + buttonView.bounds.height))///2
 		} else {
 			frameToCenter.origin.y = 0
 		}
 		
 		scrollView?.frame = frameToCenter
 	}
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 	
 	// MARK: IBActions
 	

@@ -27,6 +27,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	
 	// MARK: IBOutlets
 	
+	@IBOutlet weak var scrollView: UIScrollView!
+	
 	@IBOutlet weak var titleTextField: UITextField!
 	@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var editLabel: UILabel!
@@ -51,6 +53,10 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+		
 		NotificationCenter.default.addObserver(self, selector: #selector(reminderDeleted), name: NSNotification.Name(rawValue: "reminderDeleted"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(photoDeleted), name: NSNotification.Name(rawValue: "photoDeleted"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(locationAdded), name: NSNotification.Name(rawValue: "locationAdded"), object: nil)
@@ -87,6 +93,20 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	
 	// MARK: Custom functions
 	
+	@objc func keyboardWillShow(notification: NSNotification) {
+		guard let userInfo = notification.userInfo else { return }
+		guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+		let keyboardFrame = keyboardSize.cgRectValue
+		
+		if linkTextField.isFirstResponder || listItemTextField.isFirstResponder {
+			scrollView.contentOffset = CGPoint(x: 0, y: keyboardFrame.height)
+		}
+	}
+	
+	@objc func keyboardWillHide(notification: NSNotification) {
+		scrollView.contentOffset = CGPoint(x: 0, y: 0)
+	}
+	
 	func configureView() {
 		// Update the user interface for the detail item.
 		
@@ -122,7 +142,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 						if let contents = UIImage(contentsOfFile: path) {
 							photos.append(contents)
 							filePaths.append(filePath)
-							print("added")
 						}
 					} else {
 						print("not found")
@@ -210,8 +229,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		let filePath = DocumentsManager.documentsURL.appendingPathComponent("\(imageID)")
 		
 		do {
-			if let pngImageData = pickedImage.pngData() {
-				try pngImageData.write(to: filePath)
+			if let jpgImageData = pickedImage.jpegData(compressionQuality: 1.0) {
+				try jpgImageData.write(to: filePath)
 				filePaths.append("\(imageID)")
 			}
 		} catch {
@@ -397,6 +416,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		}
 	}
 	
+	// MARK: Navigation
+	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "addReminder" {
 			let destinationViewController = segue.destination as! AddReminderViewController
@@ -475,6 +496,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		}
 	}
 }
+
+// MARK: Extensions
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource, CellCheckDelegate {
 	func didChangeSelectedState(sender: CheckListTableViewCell, isChecked: Bool) {

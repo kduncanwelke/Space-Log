@@ -35,7 +35,6 @@ class SearchTableViewController: UITableViewController {
        return resultsList.count
     }
 
-	
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		var cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
 		cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: "searchCell")
@@ -54,7 +53,6 @@ class SearchTableViewController: UITableViewController {
 		cell.detailTextLabel?.text = LocationSearch.parseAddress(selectedItem: selectedItem)
 		return cell
     }
-
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let selectedLocation = resultsList[indexPath.row].placemark

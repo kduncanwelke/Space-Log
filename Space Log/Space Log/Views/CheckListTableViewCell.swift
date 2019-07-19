@@ -28,6 +28,8 @@ class CheckListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+	// MARK: IBActions
+	
 	@IBAction func checkTapped(_ sender: UIButton) {
 		var isChecked = false
 		
