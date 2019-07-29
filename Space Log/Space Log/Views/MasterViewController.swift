@@ -50,6 +50,10 @@ class MasterViewController: UITableViewController {
 		super.viewWillAppear(animated)
 	}
 	
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
+	
 	// MARK: Custom functions
 	
 	func loadEntries() {

@@ -28,6 +28,7 @@ class SearchTableViewController: UITableViewController {
 		tableView.backgroundColor = UIColor(red:0.11, green:0.10, blue:0.17, alpha:1.0)
 		tableView.rowHeight = 70.0
     }
+	
 
     // MARK: - Table view data source
 

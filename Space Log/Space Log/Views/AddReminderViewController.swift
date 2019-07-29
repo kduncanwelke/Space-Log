@@ -79,6 +79,11 @@ class AddReminderViewController: UIViewController {
 		}
 	}
 	
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
+	
+	
 	// MARK: Custom functions
 	
 	func getDate(from stringDate: String) -> Date? {

@@ -49,6 +49,10 @@ class ImageViewController: UIViewController {
 		updateZoom(view.bounds.size)
 	}
 	
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
+	
 	
 	// MARK: Custom functions
 	

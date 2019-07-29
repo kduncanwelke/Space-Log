@@ -35,3 +35,18 @@ extension UIViewController {
 		self.present(alert, animated: true, completion: nil)
 	}
 }
+
+
+// handle status bar color
+extension UISplitViewController {
+	open override var preferredStatusBarStyle: UIStatusBarStyle {
+		let master = viewControllers.first
+		return master?.preferredStatusBarStyle ?? .default
+	}
+}
+
+extension UINavigationController {
+	open override var preferredStatusBarStyle: UIStatusBarStyle {
+		return topViewController?.preferredStatusBarStyle ?? .default
+	}
+}

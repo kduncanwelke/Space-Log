@@ -91,6 +91,10 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		configureView()
 	}
 	
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
+	
 	// MARK: Custom functions
 	
 	@objc func keyboardWillShow(notification: NSNotification) {
@@ -99,7 +103,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		let keyboardFrame = keyboardSize.cgRectValue
 		
 		if linkTextField.isFirstResponder || listItemTextField.isFirstResponder {
-			scrollView.contentOffset = CGPoint(x: 0, y: keyboardFrame.height)
+			scrollView.contentOffset = CGPoint(x: 0, y: keyboardFrame.height+100.0)
 		}
 	}
 	
@@ -434,6 +438,10 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	}
 
 	// MARK: IBActions
+	
+	@IBAction func tap(_ sender: UITapGestureRecognizer) {
+		self.view.endEditing(true)
+	}
 	
 	@IBAction func addLocationTapped(_ sender: UIButton) {
 		performSegue(withIdentifier: "addLocation", sender: Any?.self)

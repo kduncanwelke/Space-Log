@@ -95,6 +95,10 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 		}
 	}
 	
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
+	
 	// MARK: Custom functions
 	
 	func updateLocation(location: MKPlacemark) {
