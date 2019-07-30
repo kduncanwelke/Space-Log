@@ -48,8 +48,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	@IBOutlet weak var goButton: UIButton!
 	
 	@IBOutlet weak var addToListButton: UIButton!
+	@IBOutlet weak var deleteListButton: UIButton!
 	
-
+	@IBOutlet var tapGesture: UITapGestureRecognizer!
+	
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
@@ -62,8 +65,12 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		NotificationCenter.default.addObserver(self, selector: #selector(locationAdded), name: NSNotification.Name(rawValue: "locationAdded"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(locationDeleted), name: NSNotification.Name(rawValue: "locationDeleted"), object: nil)
 		
+		tapGesture.isEnabled = false
+		
 		collectionView.dataSource = self
 		collectionView.delegate = self
+		
+		deleteListButton.isHidden = true
 		
 		imagePicker.delegate = self
 		imagePicker.allowsEditing = false
@@ -105,10 +112,13 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		if linkTextField.isFirstResponder || listItemTextField.isFirstResponder {
 			scrollView.contentOffset = CGPoint(x: 0, y: keyboardFrame.height+100.0)
 		}
+		
+		tapGesture.isEnabled = true
 	}
 	
 	@objc func keyboardWillHide(notification: NSNotification) {
 		scrollView.contentOffset = CGPoint(x: 0, y: 0)
+		tapGesture.isEnabled = false
 	}
 	
 	func configureView() {
@@ -168,6 +178,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 			}
 			
 			guard let savedList = detail.list, let listItems = savedList.items else { return }
+			deleteListButton.isHidden = false
 			checkList = listItems
 			tableView.reloadData()
 		} else {
@@ -460,7 +471,14 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		checkList.append(newItem)
 		listItemTextField.text = ""
 		tableView.reloadData()
+		deleteListButton.isHidden = false
 	}
+	
+	@IBAction func deleteListPressed(_ sender: UIButton) {
+		checkList.removeAll()
+		tableView.reloadData()
+	}
+	
 	
 	@IBAction func goPressed(_ sender: UIButton) {
 		guard let linkText = linkTextField.text else { return }
@@ -605,6 +623,7 @@ extension DetailViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let tappedCell = collectionView.cellForItem(at:indexPath) as! PhotoCollectionViewCell
 		if tappedCell.image.image == UIImage(named: "add") {
+			print("tap")
 			present(imagePicker, animated: true, completion: nil)
 		} else {
 			tappedImage = tappedCell.image.image
