@@ -24,6 +24,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	var tappedImage: UIImage?
 	var currentIndex = 0
 	var locationSet = false
+	var currentOffset: CGFloat = 0.0
 	
 	// MARK: IBOutlets
 	
@@ -46,7 +47,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	
 	@IBOutlet weak var linkTextField: UITextField!
 	@IBOutlet weak var goButton: UIButton!
-	
+
 	@IBOutlet weak var addToListButton: UIButton!
 	@IBOutlet weak var deleteListButton: UIButton!
 	
@@ -65,6 +66,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		NotificationCenter.default.addObserver(self, selector: #selector(locationAdded), name: NSNotification.Name(rawValue: "locationAdded"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(locationDeleted), name: NSNotification.Name(rawValue: "locationDeleted"), object: nil)
 		
+		currentOffset = scrollView.contentOffset.y
 		tapGesture.isEnabled = false
 		
 		collectionView.dataSource = self
@@ -81,7 +83,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		
 		contentTextView.delegate = self
 		titleTextField.delegate = self
-		listItemTextField.delegate = self
+		//listItemTextField.delegate = self
 		
 		tableView.dataSource = self
 		tableView.delegate = self
@@ -94,7 +96,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		addToListButton.layer.cornerRadius = CGFloat(15.0)
 		addToListButton.clipsToBounds = true
 		addToListButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
-		
+		view.fixInputAssistant()
 		configureView()
 	}
 	
@@ -109,15 +111,19 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
 		let keyboardFrame = keyboardSize.cgRectValue
 		
-		if linkTextField.isFirstResponder || listItemTextField.isFirstResponder {
-			scrollView.contentOffset = CGPoint(x: 0, y: keyboardFrame.height+100.0)
+		currentOffset = scrollView.contentOffset.y
+		
+		if linkTextField.isFirstResponder {
+			scrollView.contentOffset = CGPoint(x: 0, y: keyboardFrame.height + currentOffset)
+		} else if listItemTextField.isFirstResponder {
+			scrollView.contentOffset = CGPoint(x: 0, y: (keyboardFrame.height + (keyboardFrame.height * 0.5)) + currentOffset)
 		}
 		
 		tapGesture.isEnabled = true
 	}
 	
 	@objc func keyboardWillHide(notification: NSNotification) {
-		scrollView.contentOffset = CGPoint(x: 0, y: 0)
+		scrollView.contentOffset = CGPoint(x: 0, y: currentOffset)
 		tapGesture.isEnabled = false
 	}
 	
@@ -606,6 +612,7 @@ extension DetailViewController: UITextFieldDelegate {
 		}
 	}
 }
+
 
 extension DetailViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

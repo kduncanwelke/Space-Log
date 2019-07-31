@@ -126,13 +126,13 @@
                                                         <rect key="frame" x="0.0" y="96" width="384" height="30"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No reminder" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IST-mu-j7e">
-                                                                <rect key="frame" x="0.0" y="0.0" width="294.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="287.5" height="30"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                 <color key="textColor" red="0.1215686275" green="0.74117647060000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ov-fR-llh">
-                                                                <rect key="frame" x="304.5" y="0.0" width="79.5" height="30"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ov-fR-llh">
+                                                                <rect key="frame" x="297.5" y="0.0" width="86.5" height="30"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <state key="normal" title="   Add?   ">
                                                                     <color key="titleColor" red="0.1215686275" green="0.74117647060000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -142,6 +142,9 @@
                                                                 </connections>
                                                             </button>
                                                         </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="4ov-fR-llh" firstAttribute="width" secondItem="IST-mu-j7e" secondAttribute="width" multiplier="0.3" id="pPL-JU-jFI"/>
+                                                        </constraints>
                                                     </stackView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Start typing . . ." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="att-qD-vbj">
                                                         <rect key="frame" x="0.0" y="144" width="384" height="283"/>
@@ -238,28 +241,33 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="OPu-EL-qLM">
-                                                <rect key="frame" x="20" y="659" width="374" height="30"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="OPu-EL-qLM">
+                                                <rect key="frame" x="15" y="659" width="384" height="30"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter title . . ." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fe7-a0-Kjf">
-                                                        <rect key="frame" x="0.0" y="0.0" width="221.5" height="30"/>
-                                                        <color key="textColor" red="0.58805666709164228" green="0.66841342879060106" blue="0.8862423406862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter list item text . . ." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IUT-l8-5Ch">
+                                                        <rect key="frame" x="0.0" y="0.0" width="234" height="30"/>
+                                                        <color key="textColor" red="0.58805666710000004" green="0.66841342879999999" blue="0.88624234069999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
+                                                                <color key="value" red="0.46274509800000002" green="0.52549019610000003" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                     </textField>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ve9-6S-5Ow">
-                                                        <rect key="frame" x="241.5" y="0.0" width="132.5" height="30"/>
-                                                        <color key="backgroundColor" red="0.46274509803921571" green="0.52549019607843139" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <state key="normal" title="Add List Item">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncL-tN-xpb">
+                                                        <rect key="frame" x="244" y="0.0" width="140" height="30"/>
+                                                        <color key="backgroundColor" red="0.58805666710000004" green="0.66841342879999999" blue="0.88624234069999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <state key="normal" title="Add to List">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="addListItemPressed:" destination="JEX-9P-axG" eventType="touchUpInside" id="V0c-Nr-Q6t"/>
+                                                            <action selector="addListItemPressed:" destination="JEX-9P-axG" eventType="touchUpInside" id="ZUg-iC-hYG"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="Ve9-6S-5Ow" firstAttribute="width" secondItem="fe7-a0-Kjf" secondAttribute="width" multiplier="0.6" id="evB-VC-dZv"/>
+                                                    <constraint firstItem="ncL-tN-xpb" firstAttribute="width" secondItem="IUT-l8-5Ch" secondAttribute="width" multiplier="0.6" id="ZBc-0H-oNL"/>
                                                 </constraints>
                                             </stackView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4G9-FI-xCc">
@@ -324,15 +332,14 @@
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="4G9-FI-xCc" secondAttribute="bottom" constant="40" id="APP-wR-aD1"/>
                                             <constraint firstAttribute="trailing" secondItem="cIq-IJ-kss" secondAttribute="trailing" id="AyX-2r-qEB"/>
-                                            <constraint firstItem="OPu-EL-qLM" firstAttribute="leading" secondItem="ulk-w0-EiV" secondAttribute="leading" constant="20" id="DHW-31-c05"/>
-                                            <constraint firstItem="4ov-fR-llh" firstAttribute="width" secondItem="Ve9-6S-5Ow" secondAttribute="width" multiplier="0.6" id="Dni-fF-DUx"/>
+                                            <constraint firstItem="OPu-EL-qLM" firstAttribute="leading" secondItem="ulk-w0-EiV" secondAttribute="leading" constant="15" id="DHW-31-c05"/>
                                             <constraint firstItem="cIq-IJ-kss" firstAttribute="top" secondItem="Oya-oR-CZ5" secondAttribute="bottom" constant="20" id="Flb-3G-Asl"/>
                                             <constraint firstAttribute="trailing" secondItem="Oya-oR-CZ5" secondAttribute="trailing" constant="15" id="JmE-Ix-AaZ"/>
                                             <constraint firstItem="att-qD-vbj" firstAttribute="centerX" secondItem="ulk-w0-EiV" secondAttribute="centerX" id="Lbj-fx-hdl"/>
                                             <constraint firstItem="Oya-oR-CZ5" firstAttribute="top" secondItem="ulk-w0-EiV" secondAttribute="top" constant="15" id="Llb-Rl-6kw"/>
                                             <constraint firstItem="cIq-IJ-kss" firstAttribute="leading" secondItem="ulk-w0-EiV" secondAttribute="leading" id="ONf-a4-Kjc"/>
                                             <constraint firstItem="eEW-m8-tAF" firstAttribute="centerX" secondItem="ulk-w0-EiV" secondAttribute="centerX" id="OwV-LH-crb"/>
-                                            <constraint firstAttribute="trailing" secondItem="OPu-EL-qLM" secondAttribute="trailing" constant="20" id="UVQ-NQ-VNn"/>
+                                            <constraint firstAttribute="trailing" secondItem="OPu-EL-qLM" secondAttribute="trailing" constant="15" id="UVQ-NQ-VNn"/>
                                             <constraint firstItem="eEW-m8-tAF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4G9-FI-xCc" secondAttribute="bottom" constant="3" id="Ztf-fG-6bo"/>
                                             <constraint firstItem="OPu-EL-qLM" firstAttribute="top" secondItem="cIq-IJ-kss" secondAttribute="bottom" constant="30" id="f82-AR-unD"/>
                                             <constraint firstItem="4G9-FI-xCc" firstAttribute="top" secondItem="OPu-EL-qLM" secondAttribute="bottom" constant="20" id="fa2-Qv-RwI"/>
@@ -386,7 +393,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
-                        <outlet property="addToListButton" destination="Ve9-6S-5Ow" id="yld-10-Jyd"/>
+                        <outlet property="addToListButton" destination="ncL-tN-xpb" id="GDf-w7-Yxf"/>
                         <outlet property="collectionView" destination="5tl-Td-pbt" id="sEc-0p-thM"/>
                         <outlet property="contentTextView" destination="att-qD-vbj" id="bGz-G3-7ZL"/>
                         <outlet property="dateLabel" destination="Xwm-v8-ZpD" id="P1p-8A-S5H"/>
@@ -394,7 +401,7 @@
                         <outlet property="editLabel" destination="FwQ-Wq-bop" id="LtV-eV-XFE"/>
                         <outlet property="goButton" destination="exf-ar-v4E" id="Avk-ij-kv2"/>
                         <outlet property="linkTextField" destination="2Lv-no-XfQ" id="5NN-nS-gbW"/>
-                        <outlet property="listItemTextField" destination="fe7-a0-Kjf" id="EW5-WZ-az6"/>
+                        <outlet property="listItemTextField" destination="IUT-l8-5Ch" id="mmb-hD-owI"/>
                         <outlet property="locationLabel" destination="Bwi-U6-JCj" id="hyM-Yk-gxY"/>
                         <outlet property="reminderButton" destination="4ov-fR-llh" id="0Nf-Z8-p0b"/>
                         <outlet property="reminderText" destination="IST-mu-j7e" id="ZsA-xB-ivn"/>
