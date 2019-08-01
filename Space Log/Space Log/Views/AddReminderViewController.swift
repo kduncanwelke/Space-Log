@@ -17,6 +17,7 @@ class AddReminderViewController: UIViewController {
 	@IBOutlet weak var noteTextField: UITextField!
 	@IBOutlet weak var confirmButton: UIButton!
 	@IBOutlet weak var deleteButton: UIButton!
+	@IBOutlet var tapGesture: UITapGestureRecognizer!
 	
 	// MARK: Variables
 	
@@ -27,10 +28,16 @@ class AddReminderViewController: UIViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
 		datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
 	
 		formatter.dateFormat = "yyyy-MM-dd 'at' hh:mm a"
+		
+		tapGesture.isEnabled = false
 		
         // Do any additional setup after loading the view.
 		if let string = stringDate {
@@ -86,6 +93,34 @@ class AddReminderViewController: UIViewController {
 	
 	// MARK: Custom functions
 	
+	@objc func keyboardWillShow(notification: NSNotification) {
+		guard let userInfo = notification.userInfo else { return }
+		guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+		let keyboardFrame = keyboardSize.cgRectValue
+		
+		var aRect: CGRect = self.view.frame
+		aRect.size.height -= keyboardFrame.height
+		
+		var coord = noteTextField.convert(noteTextField.center, to: self.view)
+	
+		if (!aRect.contains(coord)) {
+			var multi = keyboardFrame.height / self.view.frame.height
+			var heightToMove = keyboardFrame.height * multi
+			print(heightToMove)
+			self.view.frame.origin.y -= heightToMove
+			print("this")
+		} else {
+			print("nothing")
+		}
+		
+		tapGesture.isEnabled = true
+	}
+	
+	@objc func keyboardWillHide(notification: NSNotification) {
+		self.view.frame.origin.y = 0
+		tapGesture.isEnabled = false
+	}
+	
 	func getDate(from stringDate: String) -> Date? {
 		guard let createdDate = formatter.date(from: stringDate) else {
 			print("date conversion failed")
@@ -104,6 +139,11 @@ class AddReminderViewController: UIViewController {
 	}
 	
 	// MARK: IBActions
+	
+	@IBAction func tap(_ sender: UITapGestureRecognizer) {
+		self.view.endEditing(true)
+	}
+	
 	
 	@IBAction func confirmButtonPressed(_ sender: UIButton) {
 		if noteTextField.text == "" {

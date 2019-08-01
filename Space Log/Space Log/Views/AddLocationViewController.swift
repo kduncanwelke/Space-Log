@@ -19,6 +19,8 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 	@IBOutlet weak var topLabel: UILabel!
 	@IBOutlet weak var addLocationButton: UIButton!
 	@IBOutlet weak var deleteLocationButton: UIButton!
+	@IBOutlet weak var useDeviceLocationButton: UIButton!
+	
 	
 	// MARK: Variables
 	
@@ -62,6 +64,10 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 		deleteLocationButton.clipsToBounds = true
 		deleteLocationButton.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
 		
+		useDeviceLocationButton.layer.cornerRadius = CGFloat(15.0)
+		useDeviceLocationButton.clipsToBounds = true
+		useDeviceLocationButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+		
 		if usingSavedLocation {
 			topLabel.text = "Viewing Saved Location"
 			addLocationButton.setTitle("   Save New Location   ", for: .normal)
@@ -70,7 +76,7 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 			deleteLocationButton.backgroundColor = .red
 			deleteLocationButton.isEnabled = true
 		} else {
-			topLabel.text = "Please select a location to associate with this entry"
+			topLabel.text = "Please select a location"
 			addLocationButton.setTitle("   Add Location   ", for: .normal)
 			locationLabel.text = "-"
 			

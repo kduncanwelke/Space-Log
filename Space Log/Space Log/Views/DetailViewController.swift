@@ -38,7 +38,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var listItemTextField: UITextField!
 	
-	@IBOutlet weak var locationLabel: UILabel!
+	@IBOutlet weak var locationButton: UIButton!
 	
 	@IBOutlet weak var reminderButton: UIButton!
 	@IBOutlet weak var reminderText: UILabel!
@@ -150,7 +150,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 					if convertedDate < Date() {
 						reminderText.text = "This reminder has expired"
 					} else {
-						reminderText.text = "Reminder on \(date)"
+						reminderText.text = "Reminder \(date)"
 					}
 				}
 			}
@@ -175,8 +175,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 				linkTextField.text = link.url
 			}
 			
-			if let location = detail.location {
-				locationLabel.text = location.name
+			if let location = detail.location, let name = location.name {
+				locationButton.setTitle("\(name)", for: .normal)
 				LocationSearch.latitude = location.latitude
 				LocationSearch.longitude = location.longitude
 				LocationSearch.name = location.name ?? "No name"
@@ -201,7 +201,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 			linkTextField.text = ""
 			photos = [UIImage(named: "add")!]
 			collectionView.reloadData()
-			locationLabel.text = "No Location"
+			locationButton.setTitle("No Location", for: .normal)
 			locationSet = false
 		}
 	}
@@ -234,12 +234,12 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	}
 	
 	@objc func locationAdded() {
-		locationLabel.text = LocationSearch.name
+		locationButton.setTitle("\(LocationSearch.name)", for: .normal)
 		locationSet = true
 	}
 	
 	@objc func locationDeleted() {
-		locationLabel.text = "No Location"
+		locationButton.setTitle("No Location", for: .normal) 
 		locationSet = false
 	}
 	
@@ -263,7 +263,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		reminderButton.setTitle("   Edit?   ", for: .normal)
 	
 		if let date = reminderDate {
-			reminderText.text = "Reminder on \(date)"
+			reminderText.text = "Reminder \(date)"
 		}
 	}
 	

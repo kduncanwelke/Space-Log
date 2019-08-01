@@ -35,6 +35,8 @@ class MasterViewController: UITableViewController {
 		navigationItem.searchController = searchController
 		navigationItem.hidesSearchBarWhenScrolling = false
 		
+		searchController.searchBar.tintColor = UIColor(red:0.12, green:0.74, blue:1.00, alpha:1.0)
+		
 		if let split = splitViewController {
 			split.preferredDisplayMode = .allVisible
 		}

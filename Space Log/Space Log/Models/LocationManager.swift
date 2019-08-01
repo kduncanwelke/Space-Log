@@ -18,17 +18,17 @@ struct LocationSearch {
 		// put a space between "4" and "Melrose Place"
 		let firstSpace = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil) ? " " : ""
 		// put a comma between street and city/state
-		let comma = (selectedItem.subThoroughfare != nil || selectedItem.thoroughfare != nil) && (selectedItem.subAdministrativeArea != nil || selectedItem.administrativeArea != nil) && (selectedItem.subAdministrativeArea != nil || selectedItem.administrativeArea != nil) ? ", " : ""
+		let comma = (selectedItem.locality != nil || selectedItem.administrativeArea != nil) && (selectedItem.subThoroughfare != nil || selectedItem.thoroughfare != nil) && (selectedItem.subAdministrativeArea != nil || selectedItem.administrativeArea != nil) ? ", " : ""
 		// put a space between "Washington" and "DC"
-		let secondSpace = (selectedItem.subAdministrativeArea != nil && selectedItem.administrativeArea != nil) ? " " : ""
+		let secondSpace = (selectedItem.subAdministrativeArea != nil && selectedItem.administrativeArea != nil) ? ", " : ""
 		let addressLine = String(
-			format:"%@%@%@%@%@%@%@",
+			format:"%@%@%@",//%@%@%@%@%@",
 			// street number
-			selectedItem.subThoroughfare ?? "",
-			firstSpace,
+			//selectedItem.subThoroughfare ?? "",
+			//firstSpace,
 			// street name
-			selectedItem.thoroughfare ?? "",
-			comma,
+			//selectedItem.thoroughfare ?? "",
+			//comma,
 			// city
 			selectedItem.locality ?? "",
 			secondSpace,
