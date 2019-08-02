@@ -491,8 +491,10 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Khw-H1-PNL">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="752"/>
+                                        <gestureRecognizers/>
                                     </imageView>
                                 </subviews>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="Khw-H1-PNL" firstAttribute="leading" secondItem="i2s-5V-iIi" secondAttribute="leading" id="7Td-Tz-DfX"/>
                                     <constraint firstItem="Khw-H1-PNL" firstAttribute="centerY" secondItem="i2s-5V-iIi" secondAttribute="centerY" id="G3P-aR-ivl"/>
@@ -504,6 +506,7 @@
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="i2s-5V-iIi" firstAttribute="top" secondItem="5RV-ta-pgt" secondAttribute="top" id="1dA-FC-e0q"/>
                             <constraint firstItem="i2s-5V-iIi" firstAttribute="trailing" secondItem="5RV-ta-pgt" secondAttribute="trailing" id="AuW-Vm-pGH"/>
@@ -514,6 +517,10 @@
                             <constraint firstItem="hV9-OS-VS1" firstAttribute="top" secondItem="i2s-5V-iIi" secondAttribute="bottom" id="bcV-WT-8wl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5RV-ta-pgt"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Q7m-Br-0y3" appends="YES" id="3ze-q8-qbI"/>
+                            <outletCollection property="gestureRecognizers" destination="mj1-Wj-9TA" appends="YES" id="pXS-JU-2T4"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="buttonView" destination="hV9-OS-VS1" id="HT0-gz-rXr"/>
@@ -528,6 +535,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bVf-3R-e68" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="Q7m-Br-0y3">
+                    <connections>
+                        <action selector="swipeRight:" destination="gQw-CE-zR1" id="2J8-Iz-x7G"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="mj1-Wj-9TA">
+                    <connections>
+                        <action selector="swipeLeft:" destination="gQw-CE-zR1" id="Y5t-lh-0mC"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="708.69565217391312" y="805.58035714285711"/>
         </scene>

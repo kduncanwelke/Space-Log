@@ -10,4 +10,5 @@ import Foundation
 
 struct EntryManager {
 	static var entries: [Entry] = []
+	static var currentPhotoIndex = 0
 }

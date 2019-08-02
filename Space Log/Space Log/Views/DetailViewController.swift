@@ -215,7 +215,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	}
 	
 	@objc func photoDeleted() {
-		let imageID = filePaths[currentIndex - 1]
+		let imageID = filePaths[EntryManager.currentPhotoIndex]
 		let imagePath = DocumentsManager.documentsURL.appendingPathComponent(imageID)
 		
 		if DocumentsManager.fileManager.fileExists(atPath: imagePath.path) {
@@ -227,9 +227,16 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 			}
 		}
 		
-		// reduce index by 1 for filepaths as default add image is not included like it is in image list
-		filePaths.remove(at: currentIndex - 1)
-		photos.remove(at: currentIndex)
+		// change index by 1 for filepaths as default add image is not included like it is in image list
+		filePaths.remove(at: EntryManager.currentPhotoIndex)
+		photos.remove(at: EntryManager.currentPhotoIndex + 1)
+		
+		if EntryManager.currentPhotoIndex == (photos.count - 1) {
+			EntryManager.currentPhotoIndex -= 1
+		} else {
+			// do nothing, index will remain static
+		}
+		
 		collectionView.reloadData()
 	}
 	
@@ -447,6 +454,9 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		} else if segue.identifier == "viewPhoto" {
 			let destinationViewController = segue.destination as? ImageViewController
 			destinationViewController?.image = tappedImage
+			var currentPhotos = photos
+			currentPhotos.remove(at: 0)
+			destinationViewController?.allImages = currentPhotos
 		} else if segue.identifier == "addLocation" {
 			let nav = segue.destination as? UINavigationController
 			let destinationViewController = nav?.topViewController as? AddLocationViewController
@@ -491,6 +501,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		
 		if let url = URL(string: linkText) {
 			UIApplication.shared.open(url, options: [:], completionHandler: nil)
+		} else {
+			showAlert(title: "Invalid URL", message: "This link could not be verified - please enter a valid URL")
 		}
 	}
 	
@@ -529,7 +541,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 	}
 }
 
-// MARK: Extensions
+// MARK: Table View
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource, CellCheckDelegate {
 	func didChangeSelectedState(sender: CheckListTableViewCell, isChecked: Bool) {
@@ -580,6 +592,8 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource, Cell
 	}
 }
 
+// MARK: Text View
+
 extension DetailViewController: UITextViewDelegate {
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		if textView.text == "Start typing . . ." {
@@ -594,6 +608,8 @@ extension DetailViewController: UITextViewDelegate {
 		}
 	}
 }
+
+// MARK: Text Field
 
 extension DetailViewController: UITextFieldDelegate {
 	func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -613,6 +629,7 @@ extension DetailViewController: UITextFieldDelegate {
 	}
 }
 
+// MARK: Collection View
 
 extension DetailViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -635,11 +652,14 @@ extension DetailViewController: UICollectionViewDataSource {
 		} else {
 			tappedImage = tappedCell.image.image
 			currentIndex = indexPath.row
-			print(currentIndex)
+			EntryManager.currentPhotoIndex = currentIndex - 1
+			print(EntryManager.currentPhotoIndex )
 			performSegue(withIdentifier: "viewPhoto", sender: Any?.self)
 		}
 	}
 }
+
+// MARK: Image Picker
 
 extension DetailViewController {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

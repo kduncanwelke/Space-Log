@@ -52,22 +52,47 @@ extension UINavigationController {
 }
 
 
-extension UIView
-{
-	func fixInputAssistant()
-	{
-		for subview in self.subviews
-		{
-			if type(of: subview) is UITextField.Type
-			{
+extension UIView {
+	func fixInputAssistant() {
+		for subview in self.subviews {
+			if type(of: subview) is UITextField.Type {
 				let item = (subview as! UITextField).inputAssistantItem
 				item.leadingBarButtonGroups = []
 				item.trailingBarButtonGroups = []
-			}
-			else if subview.subviews.count > 0
-			{
+			} else if subview.subviews.count > 0 {
 				subview.fixInputAssistant()
 			}
 		}
+	}
+}
+
+extension UIView {
+	// animate box style buttons with press animation
+	func animateImageRight() {
+		UIView.animate(withDuration: 0.2, animations: {
+			self.transform = CGAffineTransform(translationX: -150.0, y: 0.0)
+		}, completion: { [unowned self] _ in
+			UIView.animate(withDuration: 0.2, animations: {
+				self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+			}, completion: { [unowned self] _ in
+				UIView.animate(withDuration: 0.2) {
+					self.transform = CGAffineTransform.identity
+				}
+			})
+		})
+	}
+	
+	func animateImageLeft() {
+		UIView.animate(withDuration: 0.2, animations: {
+			self.transform = CGAffineTransform(translationX: 150.0, y: 0.0)
+		}, completion: { [unowned self] _ in
+			UIView.animate(withDuration: 0.2, animations: {
+				self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+			}, completion: { [unowned self] _ in
+				UIView.animate(withDuration: 0.2) {
+					self.transform = CGAffineTransform.identity
+				}
+			})
+		})
 	}
 }

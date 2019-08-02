@@ -25,7 +25,8 @@ class ImageViewController: UIViewController {
 	// MARK: Variables
 	
 	var image: UIImage?
-	
+	var allImages: [UIImage] = []
+		
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -99,8 +100,51 @@ class ImageViewController: UIViewController {
 	}
 	
 	@IBAction func deletePressed(_ sender: UIButton) {
+		allImages.remove(at: EntryManager.currentPhotoIndex)
+		
 		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "photoDeleted"), object: nil)
-		self.dismiss(animated: true, completion: nil)
+	
+		if allImages.isEmpty {
+			self.dismiss(animated: true, completion: nil)
+		} else {
+			print("delete function")
+			print(EntryManager.currentPhotoIndex)
+			image = allImages[EntryManager.currentPhotoIndex]
+			
+			guard let imageToZoom = image else { return }
+			imageView.image = imageToZoom
+			print("image updated")
+		}
+	}
+	
+
+	
+	@IBAction func swipeRight(_ sender: UISwipeGestureRecognizer) {
+		// go to previous
+		if EntryManager.currentPhotoIndex == 0 {
+			return
+		} else {
+			imageView.animateImageLeft()
+			EntryManager.currentPhotoIndex -= 1
+			image = allImages[EntryManager.currentPhotoIndex]
+			
+			guard let imageToZoom = image else { return }
+			imageView.image = imageToZoom
+		}
+	}
+	
+	@IBAction func swipeLeft(_ sender: Any) {
+		// go to next
+		if EntryManager.currentPhotoIndex == allImages.count - 1 {
+			return
+		} else {
+			imageView.animateImageRight()
+			EntryManager.currentPhotoIndex += 1
+			image = allImages[EntryManager.currentPhotoIndex]
+			
+			guard let imageToZoom = image else { return }
+			imageView.image = imageToZoom
+		}
 	}
 }
 
