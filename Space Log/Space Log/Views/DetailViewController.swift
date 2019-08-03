@@ -104,6 +104,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UIImageP
 		return .lightContent
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationController?.setToolbarHidden(true, animated: false)
+	}
+	
 	// MARK: Custom functions
 	
 	@objc func keyboardWillShow(notification: NSNotification) {

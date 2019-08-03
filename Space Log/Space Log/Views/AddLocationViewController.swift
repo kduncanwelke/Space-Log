@@ -124,15 +124,15 @@ class AddLocationViewController: UIViewController, UITableViewDelegate {
 			let locale = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
 			let geocoder = CLGeocoder()
 			
-			geocoder.reverseGeocodeLocation(locale, completionHandler: { [unowned self] (placemarks, error) in
+			geocoder.reverseGeocodeLocation(locale, completionHandler: { [weak self] (placemarks, error) in
 				if error == nil {
 					guard let firstLocation = placemarks?[0] else { return }
 					annotation.title = LocationSearch.parseAddress(selectedItem: firstLocation)
-					self.locationLabel.text = annotation.title
+					self?.locationLabel.text = annotation.title
 				}
 				else {
 					// an error occurred during geocoding
-					self.showAlert(title: "Network Lost", message: "The location cannot be found - please check your network connection")
+					self?.showAlert(title: "Network Lost", message: "The location cannot be found - please check your network connection")
 				}
 			})
 		} else {

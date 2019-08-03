@@ -117,8 +117,6 @@ class ImageViewController: UIViewController {
 		}
 	}
 	
-
-	
 	@IBAction func swipeRight(_ sender: UISwipeGestureRecognizer) {
 		// go to previous
 		if EntryManager.currentPhotoIndex == 0 {

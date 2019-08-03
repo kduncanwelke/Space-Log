@@ -30,6 +30,7 @@
 		2DC47C3F22BAE45A00315A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DC47C3D22BAE45A00315A1F /* LaunchScreen.storyboard */; };
 		2DC47C4A22BAE45A00315A1F /* Space_LogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC47C4922BAE45A00315A1F /* Space_LogTests.swift */; };
 		2DC47C5622BAE5E800315A1F /* Entry.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2DC47C5422BAE5E800315A1F /* Entry.xcdatamodeld */; };
+		2DE2B9C122F600C800E6CA7A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE2B9C022F600C800E6CA7A /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		2DC47C4922BAE45A00315A1F /* Space_LogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Space_LogTests.swift; sourceTree = "<group>"; };
 		2DC47C4B22BAE45A00315A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DC47C5522BAE5E800315A1F /* Entry.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Entry.xcdatamodel; sourceTree = "<group>"; };
+		2DE2B9C022F600C800E6CA7A /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				2DB3049D22D79CB700BAD0E1 /* ImageViewController.swift */,
 				2D22352D22D9356E0055E5B9 /* AddLocationViewController.swift */,
 				2D22352F22D938A10055E5B9 /* SearchTableViewController.swift */,
+				2DE2B9C022F600C800E6CA7A /* InfoViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				2D87E23122BBFB8400A9266D /* CheckListItem.swift in Sources */,
 				2D87E23722BC247D00A9266D /* CoreDataManager.swift in Sources */,
 				2D60391A22D684C200F40780 /* PhotoCollectionViewCell.swift in Sources */,
+				2DE2B9C122F600C800E6CA7A /* InfoViewController.swift in Sources */,
 				2DC47C3322BAE45800315A1F /* AppDelegate.swift in Sources */,
 				2D22352E22D9356E0055E5B9 /* AddLocationViewController.swift in Sources */,
 				2DA38ACB22BEA5CA00FE6393 /* Protocol.swift in Sources */,

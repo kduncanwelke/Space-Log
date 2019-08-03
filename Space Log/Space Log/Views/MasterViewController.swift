@@ -50,6 +50,7 @@ class MasterViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
 		super.viewWillAppear(animated)
+		navigationController?.setToolbarHidden(false, animated: false)
 	}
 	
 	override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -101,6 +102,14 @@ class MasterViewController: UITableViewController {
 		let identifier = "\(id)"
 		notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
 	}
+	
+	
+	// MARK: IBActions
+	
+	@IBAction func infoPressed(_ sender: UIBarButtonItem) {
+		performSegue(withIdentifier: "viewInfo", sender: Any?.self)
+	}
+	
 
 	// MARK: - Segues
 

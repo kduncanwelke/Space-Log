@@ -81,12 +81,13 @@ extension SearchTableViewController: UISearchResultsUpdating {
 		request.region = mapView.region
 		let search = MKLocalSearch(request: request)
 		
-		search.start { [unowned self] response, _ in
+		search.start { [weak self] response, _ in
 			guard let response = response else {
 				return
 			}
-			self.resultsList = response.mapItems
-			self.tableView.reloadData()
+		
+			self?.resultsList = response.mapItems
+			self?.tableView.reloadData()
 		}
 	}
 	
