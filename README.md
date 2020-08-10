@@ -3,8 +3,9 @@ Record your journey!
 
 This app acts as a journal, featuring a space-inspired design, multiple options for every entry, and an easy-to-use interface. It allows a user to record useful information, including notes, lists, links, reminders, location, and photos. Being multi-use, it can record any combination of the available options that a user desires. As a digital journal it keeps all information private to the user's device, and readily close at hand.
 
-## Description
+![Screenshot of the app Space Log](https://i.ibb.co/nRNwg74/Screen-Shot-2020-08-10-at-2-33-20-PM.png)
 
+## Description
 Record your journey with Space Log!
 
 Featuring a space-inspired design, multiple options for every entry, and an easy-to-use interface, Space Log provides for your journaling, list-making, and photo-saving needs, and more!
