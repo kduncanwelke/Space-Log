@@ -1,7 +1,27 @@
 # Space-Log
-Space themed journal/notes
+Record your journey!
 
 This app acts as a journal, featuring a space-inspired design, multiple options for every entry, and an easy-to-use interface. It allows a user to record useful information, including notes, lists, links, reminders, location, and photos. Being multi-use, it can record any combination of the available options that a user desires. As a digital journal it keeps all information private to the user's device, and readily close at hand.
+
+## Description
+
+Record your journey with Space Log!
+
+Featuring a space-inspired design, multiple options for every entry, and an easy-to-use interface, Space Log provides for your journaling, list-making, and photo-saving needs, and more!
+
+Features include:
+
+* Unique space-themed art and color scheme
+* Plenty of room for written entries
+* Searchable log list
+* Inclusion of photos with entries
+* Photo view including zoom and swiping between images
+* Adding and checking off list items for entries
+* Time-based reminders with notifications displayed in real time
+* Associating a location with a given entry, from a map tap or search, or using current device location
+* Save and view a link in any entry
+* Easy deletion of entries, or any included items
+* Quick view from the log list, complete with indicators for whether reminders, photos, links, lists, and location are included in a given entry
 
 ## Features
 Space Log comes with a main view of the list of entries (referred to as 'logs), with a succinct view of title, content, and images that incidate included features (such as whether a list or location is associated with an entry). This view includes a search bar to find logs by title, content, or date.
